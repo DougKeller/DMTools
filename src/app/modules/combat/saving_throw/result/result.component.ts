@@ -3,7 +3,7 @@ import { Dice } from '@dm/common/models/dice';
 import { ROLL_TYPES } from '@dm/constants/roll_types';
 
 @Component({
-  selector: 'dm-combat-saving-throw-result',
+  selector: 'saving-throw-result',
   templateUrl: './result.component.html'
 })
 export class SavingThrowResultComponent {

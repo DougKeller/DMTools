@@ -5,7 +5,7 @@ import { ABILITIES } from '@dm/constants/abilities';
 import { SavingThrowResultComponent } from '@dm/combat/saving_throw/result/result.component';
 
 @Component({
-  selector: 'dm-combat-saving-throw',
+  selector: 'saving-throw',
   templateUrl: './saving_throw.component.html'
 })
 export class SavingThrowComponent {

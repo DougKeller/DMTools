@@ -6,7 +6,7 @@ import { MonsterService } from '@dm/common/services/monster.service';
 import { Monster } from '@dm/common/models/monster';
 
 @Component({
-  selector: 'dm-combat-saving-throw-form',
+  selector: 'saving-throw-form',
   templateUrl: './form.component.html'
 })
 export class SavingThrowFormComponent {

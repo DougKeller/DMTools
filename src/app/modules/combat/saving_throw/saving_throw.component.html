@@ -1,15 +1,12 @@
-<div class="container-fluid border p-5">
-  <div class="row">
-    <div class="col-md-12 text-center">
-      <h1 class="display-4">Saving Throw</h1>
+<div class="card">
+  <h5 class="card-header">Saving Throw</h5>
+  <div class="card-body">
+    <div class="row mb-2">
+      <saving-throw-form class="col-md-12" [options]="options" (roll)="resultsView.perform(options)"></saving-throw-form>
     </div>
-  </div>
 
-  <div class="row mb-2">
-    <dm-combat-saving-throw-form class="col-md-12" [options]="options" (roll)="resultsView.perform(options)"></dm-combat-saving-throw-form>
-  </div>
-
-  <div class="row">
-    <dm-combat-saving-throw-result #resultsView class="col-md-12"></dm-combat-saving-throw-result>
+    <div class="row">
+      <saving-throw-result #resultsView class="col-md-12"></saving-throw-result>
+    </div>
   </div>
 </div>
