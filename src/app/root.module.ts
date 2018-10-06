@@ -9,6 +9,8 @@ import { CombatModule } from '@dm/combat/combat.module';
 
 import { RootComponent } from '@dm/root/root.component';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 @NgModule({
   declarations: [
     RootComponent
@@ -19,7 +21,8 @@ import { RootComponent } from '@dm/root/root.component';
     CommonModule,
     CombatModule,
     ConstantsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule.forRoot()
   ],
   providers: [],
   bootstrap: [RootComponent]

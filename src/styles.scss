@@ -1,0 +1,16 @@
+@import 'styles/colors.scss';
+@import 'styles/cards.scss';
+@import 'styles/forms.scss';
+@import 'styles/tables.scss';
+@import 'styles/bootstrap_overrides.scss';
+@import '../node_modules/bootstrap/scss/bootstrap';
+
+/* You can add global styles to this file, and also import other style files */
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: url(./assets/mountain.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}

@@ -19,8 +19,8 @@
 
   <div class="form-row mb-2" *ngFor="let group of options.groups">
     <div class="col-md-1">
-      <button type="button" class="btn btn-outline-danger" (click)="removeGroup(group)">
-        <i class="fas fa-trash"></i>
+      <button type="button" class="btn btn-outline-red" (click)="removeGroup(group)">
+        <i class="fas fa-minus"></i>
       </button>
     </div>
     <div class="col-md-4">
@@ -51,7 +51,7 @@
 
   <div class="form-row mb-2">
     <div class="col-md-1">
-      <button type="button" class="btn btn-outline-success" (click)="addGroup()">
+      <button type="button" class="btn btn-outline-blue" (click)="addGroup()">
         <i class="fas fa-plus"></i>
       </button>
     </div>
@@ -59,7 +59,7 @@
 
   <div class="form-row">
     <div class="col-md-6 offset-md-3">
-      <button type="submit" class="btn btn-primary btn-lg btn-block">Roll</button>
+      <button type="submit" class="btn btn-blue-dark btn-lg btn-block">Roll</button>
     </div>
   </div>
 </form>
