@@ -1,0 +1,65 @@
+<form #savingThrowForm="ngForm" class="container-fluid" (ngSubmit)="submit()">
+  <div class="form-row mb-3">
+    <div class="col-md-6">
+      <label>Required Save</label>
+      <input [ngModelOptions]="{ standalone: true }" class="form-control" type="number" [(ngModel)]="options.savingThrow" placeholder="Saving Throw" />
+    </div>
+
+    <div class="col-md-6">
+      <label>Ability</label>
+      <select [ngModelOptions]="{ standalone: true }" class="form-control" [(ngModel)]="options.ability">
+        <option *ngFor="let ability of abilities" [ngValue]="ability">
+          {{ ability.abbreviation }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <h3>Groups</h3>
+
+  <div class="form-row mb-2" *ngFor="let group of options.groups">
+    <div class="col-md-1">
+      <button type="button" class="btn btn-outline-danger" (click)="removeGroup(group)">
+        <i class="fas fa-trash"></i>
+      </button>
+    </div>
+    <div class="col-md-4">
+      <select [ngModelOptions]="{ standalone: true }" class="form-control" [(ngModel)]="group.monster">
+        <option *ngFor="let monster of monsters" [ngValue]="monster">
+          {{ monster.name }}
+        </option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">
+            <i class="fas fa-hashtag"></i>
+          </span>
+        </div>
+        <input [ngModelOptions]="{ standalone: true }" min="1" class="form-control" type="number" [(ngModel)]="group.count" />
+      </div>
+    </div>
+    <div class="col-md-4">
+      <select [ngModelOptions]="{ standalone: true }" class="form-control" [(ngModel)]="group.rollType">
+        <option [ngValue]="rollTypesConstant.NORMAL">Normal</option>
+        <option [ngValue]="rollTypesConstant.ADVANTAGE">Advantage</option>
+        <option [ngValue]="rollTypesConstant.DISADVANTAGE">Disadvantage</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-row mb-2">
+    <div class="col-md-1">
+      <button type="button" class="btn btn-outline-success" (click)="addGroup()">
+        <i class="fas fa-plus"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="col-md-6 offset-md-3">
+      <button type="submit" class="btn btn-primary btn-lg btn-block">Roll</button>
+    </div>
+  </div>
+</form>
