@@ -1,12 +1,88 @@
-<div class="card shadow">
-  <h5 class="card-header">Saving Throw</h5>
-  <div class="card-body">
-    <div class="row mb-2">
-      <saving-throw-form class="col" [options]="options" (roll)="resultsView.perform(options)"></saving-throw-form>
-    </div>
+<h5 class="card-header">Saving Throw</h5>
 
-    <div class="row">
-      <saving-throw-result #resultsView class="col"></saving-throw-result>
+<div class="card-body">
+  <div class="row mb-2">
+    <div class="col">
+      <form #savingThrowForm="ngForm" class="container-fluid" (ngSubmit)="perform()">
+        <div class="form-row mb-3">
+          <div class="col">
+            <label>Required Save</label>
+            <input [ngModelOptions]="{ standalone: true }" class="form-control" type="number" [(ngModel)]="options.savingThrow" />
+          </div>
+
+          <div class="col">
+            <label>Ability</label>
+            <select [ngModelOptions]="{ standalone: true }" class="form-control" [(ngModel)]="options.ability">
+              <option *ngFor="let ability of abilities" [ngValue]="ability">
+                {{ ability.abbreviation }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row mb-4" *ngFor="let group of options.groups">
+          <div class="col">
+            <label>{{ group.monster.name }}</label>
+
+            <div class="input-group">
+              <input [ngModelOptions]="{ standalone: true }" min="1" class="form-control" type="number" [(ngModel)]="group.count" />
+
+              <div class="input-group-append">
+                <select [ngModelOptions]="{ standalone: true }" class="form-control" [(ngModel)]="group.rollType">
+                  <option [ngValue]="rollTypesConstant.NORMAL">Normal</option>
+                  <option [ngValue]="rollTypesConstant.ADVANTAGE">Advantage</option>
+                  <option [ngValue]="rollTypesConstant.DISADVANTAGE">Disadvantage</option>
+                </select>
+
+                <button type="button" class="btn btn-outline-secondary" (click)="group.count = 0; group.rollType = rollTypesConstant.NORMAL" [class.disabled]="group.count === 0">Clear</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="col">
+            <button type="submit" class="btn btn-blue-dark btn-lg btn-block">Roll</button>
+          </div>
+
+          <div class="col">
+            <button type="button" class="btn btn-outline-blue-dark btn-lg btn-block" (click)="reset()">Reset</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="summary">
+    <div class="col">
+      <table class="table">
+        <thead class="thead">
+          <tr>
+            <th scope="col">Monster</th>
+            <th scope="col">Modifier</th>
+            <th scope="col">Succeeded</th>
+            <th scope="col">Failed</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let result of summary.results">
+            <th scope="row" (click)="result.expanded = true">{{ result.monster.name }}</th>
+            <td>{{ result.modifier > -1 ? '+' + result.modifier : result.modifier }}</td>
+            <td>{{ result.succeeded }}</td>
+            <td>{{ result.failed }}</td>
+          </tr>
+        </tbody>
+
+        <tfoot>
+          <tr>
+            <th scope="col">Total</th>
+            <th scope="col"></th>
+            <th scope="col">{{ summary.succeeded }}</th>
+            <th scope="col">{{ summary.failed }}</th>
+          </tr>
+        </tfoot>
+      </table>
     </div>
   </div>
 </div>

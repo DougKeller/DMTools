@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'dm-combat',
-  templateUrl: './combat.component.html',
-  styleUrls: ['./combat.component.css']
+  templateUrl: './combat.component.html'
 })
 export class CombatComponent { }
