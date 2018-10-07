@@ -1,4 +1,10 @@
 $body-bg: $gray-700;
+$card-columns-count: 2;
+
+$dm-opacity: 0.8;
+
+$list-group-bg: rgba(0, 0, 0, 0);
+$list-group-active-bg: rgba($blue, $dm-opacity);
 
 $theme-colors: (
   "blue-lighter":  $blue-lighter,
@@ -6,4 +12,5 @@ $theme-colors: (
   "blue":          $blue,
   "blue-dark":     $blue-dark,
   "red":           $red,
+  "red-dark":      $red-dark
 );

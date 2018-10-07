@@ -4,8 +4,9 @@ $blue: rgba(69, 123, 157, 1);
 
 // custom variables
 $blue-lighter: lighten($blue, 20%);
-$blue-light: lighten($blue, 10%);
-$blue-dark: darken($blue, 10%);
+$blue-light:   lighten($blue, 10%);
+$blue-dark:    darken($blue, 10%);
+$red-dark:     darken($red, 10%);
 
 $white:    #fff;
 $gray-100: #f8f9fa;
@@ -18,14 +19,3 @@ $gray-700: #495057;
 $gray-800: #343a40;
 $gray-900: #212529;
 $black:    #000;
-
-// bootstrap variables
-$body-bg: $gray-700;
-
-$theme-colors: (
-  "blue-lighter":  $blue-lighter,
-  "blue-light":    $blue-light,
-  "blue":          $blue,
-  "blue-dark":     $blue-dark,
-  "red":           $red,
-);

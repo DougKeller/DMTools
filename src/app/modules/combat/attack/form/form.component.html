@@ -1,0 +1,60 @@
+<form #savingThrowForm="ngForm" class="container-fluid" (ngSubmit)="roll()">
+  <div class="form-row mb-3">
+    <div class="col">
+      <label>Modifier</label>
+      <input [ngModelOptions]="{ standalone: true }"  type="number" class="form-control" [(ngModel)]="modifier" />
+    </div>
+
+    <div class="col">
+      <label>Total Attacks</label>
+      <input [ngModelOptions]="{ standalone: true }"  type="number" class="form-control" [(ngModel)]="quantity" />
+    </div>
+  </div>
+  <div class="form-row mb-3">
+    <div class="col">
+      <label>Defender AC</label>
+      <input [ngModelOptions]="{ standalone: true }" class="form-control" type="number" [(ngModel)]="armorClass" />
+    </div>
+
+    <div class="col">
+      <label>Advantage</label>
+      <select [ngModelOptions]="{ standalone: true }" class="form-control" [(ngModel)]="rollType">
+        <option [ngValue]="rollTypesConstant.NORMAL">Normal</option>
+        <option [ngValue]="rollTypesConstant.ADVANTAGE">Advantage</option>
+        <option [ngValue]="rollTypesConstant.DISADVANTAGE">Disadvantage</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="col-6">
+      <button type="submit" class="btn btn-red-dark btn-block btn-lg">Attack</button>
+    </div>
+    <div class="col" *ngIf="results">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col d-flex align-items-center justify-content-around">
+            <h5 class="p-0 m-0" [class.text-success]="results.hit" [class.text-secondary]="results.hit === 0">
+              <i class="fas fa-check"></i>
+              {{ results.hit }}
+              <span *ngIf="results.criticallyHit">
+                ({{ results.criticallyHit }} Crit)
+              </span>
+            </h5>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col d-flex align-items-center justify-content-around">
+            <h5 class="p-0 m-0" [class.text-danger]="results.miss" [class.text-secondary]="results.miss === 0">
+              <i class="fas fa-times"></i>
+              {{ results.miss }}
+              <span *ngIf="results.criticallyMiss">
+                ({{ results.criticallyMiss }} Crit)
+              </span>
+            </h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

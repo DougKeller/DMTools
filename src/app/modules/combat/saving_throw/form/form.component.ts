@@ -23,19 +23,14 @@ export class SavingThrowFormComponent {
 
   ngOnInit(): void {
     this.monsterService.getMonsters().subscribe(m => {
-      this.monsters = m
+      this.monsters = m;
       this.addGroup();
     });
   }
 
-  removeGroup(group: Object): void {
-    let index = this.options.groups.indexOf(group);
-    this.options.groups.splice(index, 1);
-  }
-
   addGroup(): void {
     this.options.groups.push({
-      count: null,
+      count: 0,
       rollType: ROLL_TYPES.NORMAL,
       monster: this.monsters[this.options.groups.length]
     });
