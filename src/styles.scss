@@ -14,3 +14,20 @@ body {
   background-position: center;
   background-attachment: fixed;
 }
+
+.card {
+  margin-bottom: $card-columns-margin;
+}
+
+.modal-open {
+  display: block;
+  padding-right: 15px;
+}
+/*
+@media (min-width: 576px) {
+  .card {
+    display: inline-block; // Don't let them vertically span multiple columns
+    width: 100%; // Don't let their width change
+  }
+}
+*/

@@ -6,12 +6,6 @@ import { ABILITIES } from '@dm/constants/abilities';
 import { ROLL_TYPES } from '@dm/constants/roll_types';
 import { Dice } from '@dm/common/models/dice';
 
-interface Group {
-  count: number,
-  rollType: string,
-  monster: Monster
-};
-
 interface SavingThrowOptions {
   savingThrow: number,
   ability: Ability,
