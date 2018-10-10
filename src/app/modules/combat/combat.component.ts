@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
+import { Enemy } from '@dm/common/models/enemy';
 
 interface Group {
   count: number,
   rollType: string,
-  monster: Monster
+  enemy: Enemy,
+  hitpoints: object
 };
 
 interface Encounter {

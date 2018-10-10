@@ -1,10 +1,16 @@
 import { Component } from '@angular/core';
-import { Monster } from '@dm/common/models/monster';
-import { MonsterService } from '@dm/common/services/monster.service';
+import { Enemy } from '@dm/common/models/enemy';
+import { EnemyService } from '@dm/common/services/enemy.service';
 import { Ability } from '@dm/common/models/ability';
 import { ABILITIES } from '@dm/constants/abilities';
 import { ROLL_TYPES } from '@dm/constants/roll_types';
 import { Dice } from '@dm/common/models/dice';
+
+interface Group {
+  count: number,
+  rollType: string,
+  enemy: Enemy
+};
 
 interface SavingThrowOptions {
   savingThrow: number,
@@ -19,7 +25,7 @@ interface Roll {
 }
 
 interface Result {
-  monster: Monster,
+  enemy: Enemy,
   modifier: number,
   succeeded: number,
   failed: number,
@@ -40,14 +46,14 @@ interface Summary {
 })
 export class SavingThrowComponent {
   abilities: Ability[] = ABILITIES;
-  monsters: Monster[];
+  enemies: Enemy[];
   options: SavingThrowOptions;
   summary: Summary;
 
   rollTypesConstant = ROLL_TYPES;
 
   constructor(
-    private monsterService: MonsterService
+    private enemyService: EnemyService
   ) {}
 
   reset(): void {
@@ -58,8 +64,8 @@ export class SavingThrowComponent {
       groups: []
     };
 
-    this.monsterService.getMonsters().subscribe(m => {
-      this.monsters = m;
+    this.enemyService.getEnemies().subscribe(m => {
+      this.enemies = m;
       this.addGroup();
     });
   }
@@ -72,7 +78,7 @@ export class SavingThrowComponent {
     this.options.groups.push({
       count: 0,
       rollType: ROLL_TYPES.NORMAL,
-      monster: this.monsters[this.options.groups.length]
+      enemy: this.enemies[this.options.groups.length]
     });
   }
 
@@ -89,8 +95,8 @@ export class SavingThrowComponent {
 
   rollFor(group): void {
     let result: Result = {
-      monster: group.monster,
-      modifier: group.monster.modifier(this.options.ability),
+      enemy: group.enemy,
+      modifier: group.enemy.modifier(this.options.ability),
       succeeded: 0,
       failed: 0,
       total: group.count,

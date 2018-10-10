@@ -1,6 +1,6 @@
 import { Ability } from '@dm/common/models/ability';
 
-export class Monster {
+export class Creature {
   type: string;
   name: string;
 
