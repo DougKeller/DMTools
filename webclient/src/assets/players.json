@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Clark Larkin",
+    "type": "humanoid",
+    "armorClass": 19,
+    "hitpoints": 65,
+    "strength": 11,
+    "dexterity": 10,
+    "constitution": 14,
+    "wisdom": 18,
+    "intelligence": 12,
+    "charisma": 12
+  }
+]
