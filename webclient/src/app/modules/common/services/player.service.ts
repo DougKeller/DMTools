@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Player } from '@dm/common/models/player';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 

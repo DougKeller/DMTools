@@ -26,4 +26,8 @@ export class Dice {
   static get d20(): Dice {
     return new Dice(20);
   }
+
+  static d(s: number): Dice {
+    return new Dice(s);
+  }
 }

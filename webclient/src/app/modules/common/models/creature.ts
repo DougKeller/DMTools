@@ -1,4 +1,4 @@
-import { Ability } from '@dm/common/models/ability';
+import { Ability } from '@dm/constants/ability';
 
 export class Creature {
   type: string;
@@ -15,6 +15,7 @@ export class Creature {
   charisma: number;
 
   constructor(params) {
+    this.params = params;
     this.type = params.type;
     this.name = params.name;
     this.armorClass = params.armor_class;
@@ -27,9 +28,30 @@ export class Creature {
     this.charisma = params.charisma || 0;
   }
 
+  abilityKey(ability: Ability): string {
+    switch (ability) {
+      case Ability.Strength:
+        return 'strength';
+      case Ability.Dexterity:
+        return 'dexterity';
+      case Ability.Constitution:
+        return 'constitution';
+      case Ability.Wisdom:
+        return 'wisdom';
+      case Ability.Intelligence:
+        return 'intelligence';
+      case Ability.Charisma:
+        return 'charisma';
+    }
+  }
+
   modifier(ability: Ability): number {
-    let key = ability.name.toLowerCase();
+    let key = this.abilityKey(ability);
     let offset = this[key] - 10;
     return Math.floor(offset / 2);
+  }
+
+  copy() {
+    return new this.constructor(this.params);
   }
 };

@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Enemy } from '@dm/common/models/enemy';
 import { EnemyService } from '@dm/common/services/enemy.service';
 import { Ability } from '@dm/common/models/ability';
 import { ABILITIES } from '@dm/constants/abilities';
 import { RollType } from '@dm/constants/roll_type';
 import { Dice } from '@dm/common/models/dice';
+import { Encounter } from '@dm/common/models/encounter';
 
 interface Group {
   count: number,
@@ -45,6 +46,8 @@ interface Summary {
   templateUrl: './saving_throw.component.html'
 })
 export class SavingThrowComponent {
+  @Input() encounter: Encounter;
+
   abilities: ReadonlyArray<Ability> = ABILITIES;
   enemies: Enemy[];
   options: SavingThrowOptions;
@@ -64,11 +67,6 @@ export class SavingThrowComponent {
       ability: ABILITIES[0],
       groups: []
     };
-
-    this.enemyService.getEnemies().subscribe(m => {
-      this.enemies = m;
-      this.addGroup();
-    });
   }
 
   ngOnInit(): void {

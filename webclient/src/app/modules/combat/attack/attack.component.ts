@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Dice } from '@dm/common/models/dice';
 import { RollType } from '@dm/constants/roll_type';
 
