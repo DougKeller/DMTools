@@ -1,0 +1,12 @@
+version: '2'
+services:
+  angular:
+    command: /setup.sh
+    working_dir: /usr/src/app
+    tty: true
+    build:
+      context: ./docker/webclient
+    ports:
+      - 4200:4200
+    volumes:
+      - ./webclient:/usr/src/app
