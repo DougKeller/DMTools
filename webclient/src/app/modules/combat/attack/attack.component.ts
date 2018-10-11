@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Dice } from '@dm/common/models/dice';
-import { ROLL_TYPES } from '@dm/constants/roll_types';
+import { RollType } from '@dm/constants/roll_type';
 
 interface Results {
   hit: {
@@ -23,31 +23,31 @@ export class AttackComponent {
   modifier: number;
   quantity: number;
   armorClass: number;
-  rollType: string;
+  rollType: RollType;
+
+  rollTypeEnum = RollType;
 
   results: Results;
-
-  rollTypesConstant = ROLL_TYPES;
 
   reset(): void {
     this.results = null;
     this.modifier = 0;
     this.quantity = 1;
     this.armorClass = 15;
-    this.rollType = this.rollTypesConstant.NORMAL;
+    this.rollType = RollType.Normal;
   }
 
   ngOnInit(): void {
     this.reset();
   }
 
-  rollWithType(rollType: string): number {
+  rollWithType(rollType: RollType): number {
     switch (rollType) {
-    case ROLL_TYPES.NORMAL:
+    case RollType.Normal:
       return Dice.d20.roll();
-    case ROLL_TYPES.ADVANTAGE:
+    case RollType.Advantage:
       return Dice.d20.rollWithAdvantage();
-    case ROLL_TYPES.DISADVANTAGE:
+    case RollType.Disadvantage:
       return Dice.d20.rollWithDisadvantage();
     }
   }

@@ -30,12 +30,12 @@
 
                 <div class="input-group-append">
                   <select [ngModelOptions]="{ standalone: true }" class="form-control" [(ngModel)]="group.rollType">
-                    <option [ngValue]="rollTypesConstant.NORMAL">Normal</option>
-                    <option [ngValue]="rollTypesConstant.ADVANTAGE">Advantage</option>
-                    <option [ngValue]="rollTypesConstant.DISADVANTAGE">Disadvantage</option>
+                    <option [ngValue]="rollTypeEnum.Normal">Normal</option>
+                    <option [ngValue]="rollTypeEnum.Advantage">Advantage</option>
+                    <option [ngValue]="rollTypeEnum.Disadvantage">Disadvantage</option>
                   </select>
 
-                  <button type="button" class="btn btn-outline-secondary" (click)="group.count = 0; group.rollType = rollTypesConstant.NORMAL" [class.disabled]="group.count === 0">Clear</button>
+                  <button type="button" class="btn btn-outline-secondary" (click)="group.count = 0; group.rollType = rollTypeEnum.Normal" [class.disabled]="group.count === 0">Clear</button>
                 </div>
               </div>
             </div>

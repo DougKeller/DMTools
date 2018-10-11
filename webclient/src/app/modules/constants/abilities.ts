@@ -1,6 +1,6 @@
 import { Ability } from '@dm/common/models/ability';
 
-export const ABILITIES: Ability[] = [
+export const ABILITIES: ReadonlyArray<Ability> = [
   { id: 1, name: 'Strength', abbreviation: 'STR' },
   { id: 2, name: 'Dexterity', abbreviation: 'DEX' },
   { id: 3, name: 'Constitution', abbreviation: 'CON' },

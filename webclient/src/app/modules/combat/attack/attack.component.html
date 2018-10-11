@@ -16,6 +16,7 @@
               <input [ngModelOptions]="{ standalone: true }"  type="number" class="form-control" [(ngModel)]="quantity" (focus)="$event.target.select()" />
             </div>
           </div>
+
           <div class="form-row mb-3">
             <div class="col">
               <label>Defender AC</label>
@@ -25,9 +26,9 @@
             <div class="col">
               <label>Advantage</label>
               <select [ngModelOptions]="{ standalone: true }" class="form-control" [(ngModel)]="rollType">
-                <option [ngValue]="rollTypesConstant.NORMAL">Normal</option>
-                <option [ngValue]="rollTypesConstant.ADVANTAGE">Advantage</option>
-                <option [ngValue]="rollTypesConstant.DISADVANTAGE">Disadvantage</option>
+                <option [ngValue]="rollTypeEnum.Normal">Normal</option>
+                <option [ngValue]="rollTypeEnum.Advantage">Advantage</option>
+                <option [ngValue]="rollTypeEnum.Disadvantage">Disadvantage</option>
               </select>
             </div>
           </div>

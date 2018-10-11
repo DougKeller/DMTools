@@ -3,17 +3,17 @@ import { Enemy } from '@dm/common/models/enemy';
 import { EnemyService } from '@dm/common/services/enemy.service';
 import { Ability } from '@dm/common/models/ability';
 import { ABILITIES } from '@dm/constants/abilities';
-import { ROLL_TYPES } from '@dm/constants/roll_types';
+import { RollType } from '@dm/constants/roll_type';
 import { Dice } from '@dm/common/models/dice';
 
 interface Group {
   count: number,
-  rollType: string,
+  rollType: RollType,
   enemy: Enemy
 };
 
 interface SavingThrowOptions {
-  savingThrow: number,
+  savingThrow: RollType,
   ability: Ability,
   groups: Group[]
 };
@@ -45,12 +45,13 @@ interface Summary {
   templateUrl: './saving_throw.component.html'
 })
 export class SavingThrowComponent {
-  abilities: Ability[] = ABILITIES;
+  abilities: ReadonlyArray<Ability> = ABILITIES;
   enemies: Enemy[];
   options: SavingThrowOptions;
   summary: Summary;
 
-  rollTypesConstant = ROLL_TYPES;
+  rollType: RollType;
+  rollTypeEnum = RollType;
 
   constructor(
     private enemyService: EnemyService
@@ -77,18 +78,18 @@ export class SavingThrowComponent {
   addGroup(): void {
     this.options.groups.push({
       count: 0,
-      rollType: ROLL_TYPES.NORMAL,
+      rollType: RollType.Normal,
       enemy: this.enemies[this.options.groups.length]
     });
   }
 
-  rollForType(rollType): number {
+  rollForType(rollType: RollType): number {
     switch (rollType) {
-    case ROLL_TYPES.NORMAL:
+    case RollType.Normal:
       return Dice.d20.roll();
-    case ROLL_TYPES.ADVANTAGE:
+    case RollType.Advantage:
       return Dice.d20.rollWithAdvantage();
-    case ROLL_TYPES.DISADVANTAGE:
+    case RollType.Disadvantage:
       return Dice.d20.rollWithDisadvantage();
     }
   }
