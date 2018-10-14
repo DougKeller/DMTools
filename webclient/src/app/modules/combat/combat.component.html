@@ -1,11 +1,11 @@
 <div class="container-fluid">
   <div class="row p-4" *ngIf="encounter">
-    <div class="col-sm-6">
+    <div class="col-lg-6">
       <initiative [encounter]="encounter"></initiative>
       <enemies [encounter]="encounter"></enemies>
     </div>
 
-    <div class="col-sm-6">
+    <div class="col-lg-6">
       <attack></attack>
       <saving-throw [encounter]="encounter"></saving-throw>
     </div>

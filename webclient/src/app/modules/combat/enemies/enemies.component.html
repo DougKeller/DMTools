@@ -9,57 +9,23 @@
 
   <div class="card-body">
     <ul class="list-group list-group-flush">
-      <li class="list-group-item">
+      <li class="list-group-item p-1" *ngFor="let status of enemyStatuses()">
         <div class="container-flush">
           <div class="row">
             <div class="col">
-              <i class="fas fa-square text-red"></i>
-              Direwolf <span class="text-muted">#3</span>
+              <i class="fas fa-square" [ngClass]="{ 'text-red': status.hitpoints, 'text-muted': !status.hitpoints }"></i>
+              {{ status.creature.name }} <span class="text-muted">#{{ status.id }}</span>
             </div>
-          </div>
 
-          <div class="row">
-            <div class="col">
+            <div class="col" *ngIf="status.hitpoints > 0">
               <div class="progress">
-                <div class="progress-bar bg-success" style="width: 40%;">4/10</div>
+                <div class="progress-bar bg-success" [ngStyle]="{ width: percentHealth(status) }">
+                  {{ status.hitpoints }}/{{ status.creature.hitpoints }}
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </li>
-
-      <li class="list-group-item">
-        <div class="container-flush">
-          <div class="row">
-            <div class="col">
-              <i class="fas fa-square text-red"></i>
-              Direwolf <span class="text-muted">#5</span>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col">
-              <div class="progress">
-                <div class="progress-bar bg-success" style="width: 70%;">7/10</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </li>
-
-      <li class="list-group-item">
-        <i class="fas fa-square text-muted"></i>
-        Direwolf <span class="text-muted">#1</span>
-      </li>
-
-      <li class="list-group-item">
-        <i class="fas fa-square text-muted"></i>
-        Direwolf <span class="text-muted">#2</span>
-      </li>
-
-      <li class="list-group-item">
-        <i class="fas fa-square text-muted"></i>
-        Direwolf <span class="text-muted">#4</span>
       </li>
     </ul>
   </div>

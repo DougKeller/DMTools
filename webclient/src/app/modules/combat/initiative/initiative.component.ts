@@ -83,7 +83,7 @@ export class InitiativeComponent {
   totalSeconds(): number {
     const index = (this.round - 1) * this.rolls.length + this.currentRollIndex;
 
-    return Math.floor(index / this.rolls.length * 6.0);
+    return Math.round(index / this.rolls.length * 6.0);
   }
 
   timePassed(): string {

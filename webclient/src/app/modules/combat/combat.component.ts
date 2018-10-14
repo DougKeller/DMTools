@@ -35,10 +35,8 @@ export class CombatComponent {
     };
 
     this.players.forEach(player => addGroup(player, 1));
-    addGroup(this.enemies[0], 5);
-    addGroup(this.enemies[1], 3);
-    addGroup(this.enemies[2], 1);
-    addGroup(this.enemies[3], 1);
+    addGroup(this.enemies[304], 20);
+    addGroup(this.enemies[307], 5);
     this.encounter = new Encounter(groups);
     this.encounter.resetAll();
   }
