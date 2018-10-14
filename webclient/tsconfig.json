@@ -17,6 +17,7 @@
       "es2017",
       "dom"
     ],
+    "strict": true,
     "paths": {
       "@dm/root/*": ["app/*"],
       "@dm/*": ["app/modules/*"]
