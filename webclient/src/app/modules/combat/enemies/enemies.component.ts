@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Encounter } from '@dm/common/models/encounter';
 import { CreatureType } from '@dm/common/models/creature_type';
 import { EnemyType } from '@dm/common/models/enemy_type';
-import { CreatureStatus } from '@dm/common/interfaces/creature_status';
+import { Creature } from '@dm/common/interfaces/creature';
 
 interface Cell {
   creatureType: CreatureType,
@@ -19,22 +19,22 @@ export class EnemiesComponent {
 
   showList: { [creatureName: string]: boolean } = {};
 
-  enemyStatuses(targetCreatureType: CreatureType): CreatureStatus[] {
-    let statuses: CreatureStatus[] = [];
+  enemies(targetCreatureType: CreatureType): Creature[] {
+    let creatures: Creature[] = [];
 
-    this.encounter.creatureStatuses.forEach((status) => {
+    this.encounter.creatures.forEach((status) => {
       if (status.creatureType.name === targetCreatureType.name && status.hitpoints > 0) {
-        statuses.push(status);
+        creatures.push(status);
       }
     });
 
-    return statuses;
+    return creatures;
   }
 
   typesOfEnemies(): Cell[] {
     let cells: Cell[] = [];
 
-    this.encounter.creatureStatuses.forEach((status) => {
+    this.encounter.creatures.forEach((status) => {
       let creatureIsEnemyType = status.creatureType instanceof EnemyType;
       if (status.hitpoints === 0 || !creatureIsEnemyType) {
         return;
@@ -55,7 +55,7 @@ export class EnemiesComponent {
     return cells;
   }
 
-  percentHealth(status: CreatureStatus): string {
+  percentHealth(status: Creature): string {
     let current = status.hitpoints;
     let total = status.creatureType.hitpoints;
     return `${Math.floor(current * 100.0 / total)}%`;

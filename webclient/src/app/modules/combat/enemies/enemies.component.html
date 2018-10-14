@@ -22,7 +22,7 @@
         </div>
         <div class="pt-3" *ngIf="show(cell.creatureType)">
           <ul class="list-group list-group-flush">
-            <li class="list-group-item p-1" *ngFor="let status of enemyStatuses(cell.creatureType)">
+            <li class="list-group-item p-1" *ngFor="let status of enemies(cell.creatureType)">
               <div class="container-flush">
                 <div class="row">
                   <div class="col-2">
