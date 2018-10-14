@@ -68,6 +68,4 @@ export abstract class Creature {
     const offset = this.skill(ability) - 10;
     return Math.floor(offset / 2);
   }
-
-  abstract copy(): Creature;
 }

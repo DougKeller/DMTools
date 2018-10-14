@@ -9,22 +9,37 @@
 
   <div class="card-body">
     <ul class="list-group list-group-flush">
-      <li class="list-group-item p-1" *ngFor="let status of enemyStatuses()">
-        <div class="container-flush">
-          <div class="row">
+      <li class="list-group-item" *ngFor="let cell of typesOfEnemies()">
+        <div class="container-flush list-header" (click)="toggleShow(cell.creature)">
+          <div class="row d-flex align-items-center justify-content-between">
             <div class="col">
-              <i class="fas fa-square" [ngClass]="{ 'text-red': status.hitpoints, 'text-muted': !status.hitpoints }"></i>
-              {{ status.creature.name }} <span class="text-muted">#{{ status.id }}</span>
+              <i class="fas fa-square text-red"></i>
+              {{ cell.creature.name }}
             </div>
 
-            <div class="col" *ngIf="status.hitpoints > 0">
-              <div class="progress">
-                <div class="progress-bar bg-success" [ngStyle]="{ width: percentHealth(status) }">
-                  {{ status.hitpoints }}/{{ status.creature.hitpoints }}
+            <span class="badge badge-primary badge-pill">{{ cell.quantity }}</span>
+          </div>
+        </div>
+        <div class="pt-3" *ngIf="show(cell.creature)">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item p-1" *ngFor="let status of enemyStatuses(cell.creature)">
+              <div class="container-flush">
+                <div class="row">
+                  <div class="col-2">
+                    <!-- <i class="fas fa-square text-red"></i> -->
+                    <span>#{{ status.id }}</span>
+                  </div>
+                  <div class="col">
+                    <div class="progress">
+                      <div class="progress-bar bg-success" [ngStyle]="{ width: percentHealth(status) }">
+                        {{ status.hitpoints }}/{{ status.creature.hitpoints }}
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </li>
+          </ul>
         </div>
       </li>
     </ul>
