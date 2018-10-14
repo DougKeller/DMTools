@@ -1,6 +1,6 @@
 version: '2'
 services:
-  angular:
+  webclient:
     command: /setup.sh
     working_dir: /usr/src/app
     tty: true
