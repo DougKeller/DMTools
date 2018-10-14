@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { Encounter } from '@dm/common/models/encounter';
-import { Creature } from '@dm/common/models/creature';
-import { Enemy } from '@dm/common/models/enemy';
+import { CreatureType } from '@dm/common/models/creature_type';
+import { EnemyType } from '@dm/common/models/enemy_type';
 import { CreatureStatus } from '@dm/common/interfaces/creature_status';
 
 interface Cell {
-  creature: Creature,
+  creatureType: CreatureType,
   quantity: number
 };
 
@@ -19,11 +19,11 @@ export class EnemiesComponent {
 
   showList: { [creatureName: string]: boolean } = {};
 
-  enemyStatuses(targetCreature: Creature): CreatureStatus[] {
+  enemyStatuses(targetCreatureType: CreatureType): CreatureStatus[] {
     let statuses: CreatureStatus[] = [];
 
     this.encounter.creatureStatuses.forEach((status) => {
-      if (status.creature.name === targetCreature.name && status.hitpoints > 0) {
+      if (status.creatureType.name === targetCreatureType.name && status.hitpoints > 0) {
         statuses.push(status);
       }
     });
@@ -35,20 +35,20 @@ export class EnemiesComponent {
     let cells: Cell[] = [];
 
     this.encounter.creatureStatuses.forEach((status) => {
-      let creatureIsEnemy = status.creature instanceof Enemy;
-      if (status.hitpoints === 0 || !creatureIsEnemy) {
+      let creatureIsEnemyType = status.creatureType instanceof EnemyType;
+      if (status.hitpoints === 0 || !creatureIsEnemyType) {
         return;
       }
 
       let done = false;
       cells.forEach((cell) => {
-        if (cell.creature === status.creature) {
+        if (cell.creatureType === status.creatureType) {
           done = true;
           cell.quantity += 1;
         }
       });
       if (!done) {
-        cells.push({ creature: status.creature, quantity: 1 });
+        cells.push({ creatureType: status.creatureType, quantity: 1 });
       }
     });
 
@@ -57,15 +57,15 @@ export class EnemiesComponent {
 
   percentHealth(status: CreatureStatus): string {
     let current = status.hitpoints;
-    let total = status.creature.hitpoints;
+    let total = status.creatureType.hitpoints;
     return `${Math.floor(current * 100.0 / total)}%`;
   }
 
-  toggleShow(creature: Creature): void {
-    this.showList[creature.name] = !this.showList[creature.name];
+  toggleShow(creatureType: CreatureType): void {
+    this.showList[creatureType.name] = !this.showList[creatureType.name];
   }
 
-  show(creature: Creature): boolean {
-    return this.showList[creature.name];
+  show(creatureType: CreatureType): boolean {
+    return this.showList[creatureType.name];
   }
 }

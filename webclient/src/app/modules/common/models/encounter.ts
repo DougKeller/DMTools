@@ -1,6 +1,6 @@
-import { Creature } from '@dm/common/models/creature';
-import { Player } from '@dm/common/models/player';
-import { Enemy } from '@dm/common/models/enemy';
+import { CreatureType } from '@dm/common/models/creature_type';
+import { PlayerType } from '@dm/common/models/player_type';
+import { EnemyType } from '@dm/common/models/enemy_type';
 import { Group } from '@dm/common/interfaces/group';
 import { CreatureStatus } from '@dm/common/interfaces/creature_status';
 
@@ -18,8 +18,8 @@ export class Encounter {
     this.groups.forEach((group) => {
       for (var i = 0; i < group.quantity; i += 1) {
         this.creatureStatuses.push({
-          creature: group.creature,
-          hitpoints: group.creature.hitpoints,
+          creatureType: group.creatureType,
+          hitpoints: group.creatureType.hitpoints,
           id: i + 1
         })
       }

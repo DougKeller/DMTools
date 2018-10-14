@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Encounter } from '@dm/common/models/encounter';
-import { Creature } from '@dm/common/models/creature';
-import { Player } from '@dm/common/models/player';
+import { CreatureType } from '@dm/common/models/creature_type';
+import { PlayerType } from '@dm/common/models/player_type';
 import { Dice } from '@dm/common/models/dice';
 import { Ability } from '@dm/constants/ability';
 import { Group } from '@dm/common/interfaces/group';
@@ -26,7 +26,7 @@ export class InitiativeComponent {
 
   rollInitiativeForGroup(group: Group): Roll {
     const base: number = Dice.d20.roll();
-    const modifier: number = group.creature.modifier(Ability.Dexterity);
+    const modifier: number = group.creatureType.modifier(Ability.Dexterity);
     const sum = base + modifier;
 
     return {
@@ -41,8 +41,8 @@ export class InitiativeComponent {
     this.round += 1;
     this.rolls = this.rolls.sort((a, b) => {
       if (a.sum === b.sum) {
-        let modA = a.group.creature.modifier(Ability.Dexterity);
-        let modB = b.group.creature.modifier(Ability.Dexterity);
+        let modA = a.group.creatureType.modifier(Ability.Dexterity);
+        let modB = b.group.creatureType.modifier(Ability.Dexterity);
         return modB - modA;
       }
 
@@ -85,8 +85,8 @@ export class InitiativeComponent {
     }
   }
 
-  isPlayer(creature: Creature): boolean {
-    return creature instanceof Player;
+  isPlayerType(creatureType: CreatureType): boolean {
+    return creatureType instanceof PlayerType;
   }
 
   displayFor(roll: Roll): string {

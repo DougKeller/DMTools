@@ -1,7 +1,7 @@
 import { Ability } from '@dm/constants/ability';
 import { CreatureParameters } from '@dm/common/interfaces/creature_parameters';
 
-export abstract class Creature {
+export abstract class CreatureType {
   params: CreatureParameters;
   type: string;
   name: string;

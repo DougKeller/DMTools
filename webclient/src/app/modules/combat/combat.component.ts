@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { Enemy } from '@dm/common/models/enemy';
-import { Player } from '@dm/common/models/player';
-import { Creature } from '@dm/common/models/creature';
+import { EnemyType } from '@dm/common/models/enemy_type';
+import { PlayerType } from '@dm/common/models/player_type';
+import { CreatureType } from '@dm/common/models/creature_type';
 import { Group } from '@dm/common/interfaces/group';
 import { forkJoin } from 'rxjs';
 
-import { EnemyService } from '@dm/common/services/enemy.service';
-import { PlayerService } from '@dm/common/services/player.service';
+import { EnemyTypeService } from '@dm/common/services/enemy_type.service';
+import { PlayerTypeService } from '@dm/common/services/player_type.service';
 
 import { Encounter } from '@dm/common/models/encounter';
 
@@ -15,26 +15,26 @@ import { Encounter } from '@dm/common/models/encounter';
   templateUrl: './combat.component.html'
 })
 export class CombatComponent {
-  players: Player[] = [];
-  enemies: Enemy[] = [];
+  players: PlayerType[] = [];
+  enemies: EnemyType[] = [];
   encounter?: Encounter;
 
   constructor(
-    private enemyService: EnemyService,
-    private playerService: PlayerService
+    private enemyTypeService: EnemyTypeService,
+    private playerTypeService: PlayerTypeService
   ) {}
 
   buildEncounter(): void {
     const groups: Group[] = [];
 
-    const addGroup = (creature: Creature, quantity: number) => {
+    const addGroup = (creatureType: CreatureType, quantity: number) => {
       groups.push({
-        creature,
+        creatureType,
         quantity
       });
     };
 
-    this.players.forEach(player => addGroup(player, 1));
+    this.players.forEach(playerType => addGroup(playerType, 1));
     addGroup(this.enemies[304], 20);
     addGroup(this.enemies[307], 5);
     this.encounter = new Encounter(groups);
@@ -43,8 +43,8 @@ export class CombatComponent {
 
   ngOnInit(): void {
     const observables = [
-      this.playerService.getPlayers(),
-      this.enemyService.getEnemies()
+      this.playerTypeService.getPlayerTypes(),
+      this.enemyTypeService.getEnemyTypes()
     ];
 
     forkJoin(observables).subscribe((content) => {

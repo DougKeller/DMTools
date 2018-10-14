@@ -10,19 +10,19 @@
   <div class="card-body">
     <ul class="list-group list-group-flush">
       <li class="list-group-item" *ngFor="let cell of typesOfEnemies()">
-        <div class="container-flush list-header" (click)="toggleShow(cell.creature)">
+        <div class="container-flush list-header" (click)="toggleShow(cell.creatureType)">
           <div class="row d-flex align-items-center justify-content-between">
             <div class="col">
               <i class="fas fa-square text-red"></i>
-              {{ cell.creature.name }}
+              {{ cell.creatureType.name }}
             </div>
 
             <span class="badge badge-primary badge-pill">{{ cell.quantity }}</span>
           </div>
         </div>
-        <div class="pt-3" *ngIf="show(cell.creature)">
+        <div class="pt-3" *ngIf="show(cell.creatureType)">
           <ul class="list-group list-group-flush">
-            <li class="list-group-item p-1" *ngFor="let status of enemyStatuses(cell.creature)">
+            <li class="list-group-item p-1" *ngFor="let status of enemyStatuses(cell.creatureType)">
               <div class="container-flush">
                 <div class="row">
                   <div class="col-2">
@@ -32,7 +32,7 @@
                   <div class="col">
                     <div class="progress">
                       <div class="progress-bar bg-success" [ngStyle]="{ width: percentHealth(status) }">
-                        {{ status.hitpoints }}/{{ status.creature.hitpoints }}
+                        {{ status.hitpoints }}/{{ status.creatureType.hitpoints }}
                       </div>
                     </div>
                   </div>

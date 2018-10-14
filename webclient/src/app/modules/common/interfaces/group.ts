@@ -1,6 +1,6 @@
-import { Creature } from '@dm/common/models/creature';
+import { CreatureType } from '@dm/common/models/creature_type';
 
 export interface Group {
-  creature: Creature;
+  creatureType: CreatureType;
   quantity: number
 }
