@@ -39,7 +39,15 @@ export class InitiativeComponent {
 
   setTurnOrder(): void {
     this.round += 1;
-    this.rolls = this.rolls.sort((a, b) => a.sum < b.sum ? 1 : -1);
+    this.rolls = this.rolls.sort((a, b) => {
+      if (a.sum === b.sum) {
+        let modA = a.group.creature.modifier(Ability.Dexterity);
+        let modB = b.group.creature.modifier(Ability.Dexterity);
+        return modB - modA;
+      }
+
+      return b.sum - a.sum;
+    });
     this.currentRollIndex = 0;
   }
 
@@ -57,11 +65,22 @@ export class InitiativeComponent {
     this.rollInitiative();
   }
 
+  randomizeRolls(): void {
+    this.rolls.forEach((roll) => {
+      roll.base += Dice.d(4).roll();
+      roll.base -= Dice.d(4).roll();
+      roll.base = Math.min(roll.base, 20);
+      roll.base = Math.max(roll.base, 1);
+      roll.sum = roll.base + roll.modifier;
+    });
+  }
+
   nextTurn(): void {
     this.currentRollIndex += 1;
 
     if (this.currentRollIndex >= this.rolls.length) {
       this.currentRollIndex = 0;
+      this.randomizeRolls();
       this.setTurnOrder();
     }
   }
