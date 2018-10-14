@@ -16,7 +16,11 @@ export class Encounter {
   }
 
   reset(group: Group): void {
-    for(var i = 0; i < group.quantity; i += 1) {
+    if (!group.hitpoints) {
+      group.hitpoints = [];
+    }
+
+    for(let i = 0; i < group.quantity; i += 1) {
       group.hitpoints[0] = group.creature.hitpoints;
     }
   }

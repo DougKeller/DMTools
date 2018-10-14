@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Enemy } from '@dm/common/models/enemy';
 import { Player } from '@dm/common/models/player';
+import { Creature } from '@dm/common/models/creature';
+import { Group } from '@dm/common/interfaces/group';
 import { forkJoin } from 'rxjs';
 
 import { EnemyService } from '@dm/common/services/enemy.service';
@@ -13,9 +15,9 @@ import { Encounter } from '@dm/common/models/encounter';
   templateUrl: './combat.component.html'
 })
 export class CombatComponent {
-  players: Player[];
-  enemies: Array<Enemy>;
-  encounter: Encounter;
+  players: Player[] = [];
+  enemies: Enemy[] = [];
+  encounter?: Encounter;
 
   constructor(
     private enemyService: EnemyService,
@@ -23,14 +25,15 @@ export class CombatComponent {
   ) {}
 
   buildEncounter(): void {
-    let groups = [];
+    const groups: Group[] = [];
 
-    let addGroup = (creature, quantity) => {
+    const addGroup = (creature: Creature, quantity: number) => {
       groups.push({
-        creature: creature,
-        quantity: quantity
+        creature,
+        quantity
       });
     };
+
     this.players.forEach(player => addGroup(player, 1));
     addGroup(this.enemies[0], 5);
     addGroup(this.enemies[1], 3);
@@ -41,7 +44,7 @@ export class CombatComponent {
   }
 
   ngOnInit(): void {
-    let observables = [
+    const observables = [
       this.playerService.getPlayers(),
       this.enemyService.getEnemies()
     ];

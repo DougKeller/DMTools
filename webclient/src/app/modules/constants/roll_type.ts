@@ -1,1 +1,1 @@
-export enum RollType { Normal, Advantage, Disadvantage };
+export enum RollType { Normal, Advantage, Disadvantage }

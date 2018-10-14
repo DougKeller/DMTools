@@ -10,15 +10,15 @@ export class Dice {
   }
 
   rollWithAdvantage(): number {
-    let roll1 = this.roll();
-    let roll2 = this.roll();
+    const roll1 = this.roll();
+    const roll2 = this.roll();
 
     return roll1 > roll2 ? roll1 : roll2;
   }
 
   rollWithDisadvantage(): number {
-    let roll1 = this.roll();
-    let roll2 = this.roll();
+    const roll1 = this.roll();
+    const roll2 = this.roll();
 
     return roll1 < roll2 ? roll1 : roll2;
   }

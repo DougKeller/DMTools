@@ -6,6 +6,5 @@ import { Encounter } from '@dm/common/models/encounter';
   templateUrl: './enemies.component.html'
 })
 export class EnemiesComponent {
-  @Input() encounter: Encounter;
-
+  @Input() encounter?: Encounter;
 }

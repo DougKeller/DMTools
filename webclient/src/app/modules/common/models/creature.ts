@@ -1,7 +1,8 @@
 import { Ability } from '@dm/constants/ability';
+import { CreatureParameters } from '@dm/common/interfaces/creature_parameters';
 
 export abstract class Creature {
-  params;
+  params: CreatureParameters;
   type: string;
   name: string;
 
@@ -15,18 +16,18 @@ export abstract class Creature {
   intelligence: number;
   charisma: number;
 
-  constructor(params) {
+  constructor(params: CreatureParameters) {
     this.params = params;
     this.type = params.type;
     this.name = params.name;
     this.armorClass = params.armor_class;
-    this.hitpoints = params.hit_points || 0;
-    this.strength = params.strength || 0;
-    this.dexterity = params.dexterity || 0;
-    this.constitution = params.constitution || 0;
-    this.intelligence = params.intelligence || 0;
-    this.wisdom = params.wisdom || 0;
-    this.charisma = params.charisma || 0;
+    this.hitpoints = params.hit_points;
+    this.strength = params.strength;
+    this.dexterity = params.dexterity;
+    this.constitution = params.constitution;
+    this.intelligence = params.intelligence;
+    this.wisdom = params.wisdom;
+    this.charisma = params.charisma;
   }
 
   abilityKey(ability: Ability): string {
@@ -46,11 +47,27 @@ export abstract class Creature {
     }
   }
 
+  skill(ability: Ability): number {
+    switch (ability) {
+    case Ability.Strength:
+      return this.strength;
+    case Ability.Dexterity:
+      return this.dexterity;
+    case Ability.Constitution:
+      return this.constitution;
+    case Ability.Wisdom:
+      return this.wisdom;
+    case Ability.Intelligence:
+      return this.intelligence;
+    case Ability.Charisma:
+      return this.charisma;
+    }
+  }
+
   modifier(ability: Ability): number {
-    let key = this.abilityKey(ability);
-    let offset = this[key] - 10;
+    const offset = this.skill(ability) - 10;
     return Math.floor(offset / 2);
   }
 
-  abstract copy();
-};
+  abstract copy(): Creature;
+}

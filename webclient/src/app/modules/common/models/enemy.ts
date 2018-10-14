@@ -4,4 +4,4 @@ export class Enemy extends Creature {
   copy(): Enemy {
     return new Enemy(this.params);
   }
-};
+}

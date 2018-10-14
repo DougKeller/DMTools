@@ -5,4 +5,4 @@ export enum Ability {
   Wisdom,
   Intelligence,
   Charisma
-};
+}
