@@ -1,13 +1,15 @@
 import { Component, Input } from '@angular/core';
 import { Encounter } from '@dm/common/models/encounter';
 import { Creature } from '@dm/common/models/creature';
+import { Player } from '@dm/common/models/player';
 import { Dice } from '@dm/common/models/dice';
 import { Ability } from '@dm/constants/ability';
 
 interface Roll {
   base: number,
   sum: number,
-  modifier: number
+  modifier: number,
+  group
 }
 
 @Component({
@@ -17,99 +19,55 @@ interface Roll {
 export class InitiativeComponent {
   @Input() encounter: Encounter;
 
-  rolls: { [name: string]: Roll; };
+  rolls: Roll[];
+  currentRollIndex: number;
+
   round: number;
-  activeCreature: Creature;
-  turnOrder: Creature[];
 
-  jitter: number;
-
-  groups: { [name: string]: number };
-
-  rollInitiativeForCreature(creature: Creature): Roll {
+  rollInitiativeForGroup(group): Roll {
     let base: number = Dice.d20.roll();
-    let modifier: number = creature.modifier(Ability.Dexterity);
+    let modifier: number = group.creature.modifier(Ability.Dexterity);
     let sum = base + modifier;
 
     return {
       base: base,
       sum: sum,
-      modifier: modifier
+      modifier: modifier,
+      group: group
     };
   }
 
-  setTurnOrder(): Creature[] {
-    this.turnOrder = [];
-    this.groups = {};
-    this.encounter.creatures.forEach(creature => {
-      if (creature.hitpoints <= 0 && !this.isPlayer(creature)) {
-        return;
-      }
-
-      this.groups[creature.name] = this.groups[creature.name] || 0;
-      this.groups[creature.name] += 1;
-
-      let index = 0;
-      this.turnOrder.forEach(c => {
-        if (this.rolls[c.name].sum > this.rolls[creature.name].sum) {
-          index += 1;
-        }
-      });
-
-      if (this.groups[creature.name] === 1) {
-        this.turnOrder.splice(index, 0, creature);
-      }
-    });
+  setTurnOrder(): void {
+    this.round += 1;
+    this.rolls = this.rolls.sort((a, b) => a.sum < b.sum);
+    this.currentRollIndex = 0;
   }
 
   rollInitiative(): void {
-    this.round += 1;
-
-    if (this.round === 1) {
-      this.rolls = {};
-      this.encounter.creatures.forEach(c => {
-        if (this.rolls[c.name]) {
-          return;
-        }
-
-        this.rolls[c.name] = this.rollInitiativeForCreature(c);
-      });
-    } else {
-      Object.values(this.rolls).forEach(v => {
-        v.base += Dice.d(this.jitter).roll();
-        v.base -= Dice.d(this.jitter).roll();
-        if (v.base >= 20) {
-          v.base = 20;
-        }
-        if (v.base <= 1) {
-          v.base = 1;
-        }
-        v.sum = v.base + v.modifier;
-      });
-    }
+    this.rolls = [];
+    this.encounter.groups.forEach((group) => {
+      this.rolls.push(this.rollInitiativeForGroup(group));
+    });
 
     this.setTurnOrder();
-
-    this.activeCreature = this.turnOrder[0];
-  }
-
-  nextTurn(): void {
-    let index = this.turnOrder.indexOf(this.activeCreature) + 1;
-    if (index >= this.turnOrder.length) {
-      this.rollInitiative();
-    } else {
-      this.activeCreature = this.turnOrder[index];
-    }
   }
 
   ngOnInit(): void {
     this.round = 0;
-    this.jitter = 3;
     this.rollInitiative();
   }
 
+  nextTurn(): void {
+    this.currentRollIndex += 1;
+
+    if (this.currentRollIndex >= this.rolls.length) {
+      this.currentRollIndex = 0;
+      this.setTurnOrder();
+    }
+  }
+
   isPlayer(creature: Creature): boolean {
-    return this.encounter.players().includes(creature);
+    return creature instanceof Player;
   }
 
   displayFor(roll: Roll): string {
@@ -120,5 +78,24 @@ export class InitiativeComponent {
       str += `${roll.modifier})`;
     }
     return str;
-  };
+  }
+
+  totalSeconds(): number {
+    let index = (this.round - 1) * this.rolls.length + this.currentRollIndex;
+
+    return Math.floor(index / this.rolls.length * 6.0);
+  }
+
+  timePassed(): string {
+    let seconds = this.totalSeconds();
+    let minutes = Math.floor(seconds / 60);
+    seconds = seconds % 60;
+
+    let str = `${minutes}:`;
+    if (seconds < 10) {
+      str += '0';
+    }
+    str += seconds;
+    return str;
+  }
 }

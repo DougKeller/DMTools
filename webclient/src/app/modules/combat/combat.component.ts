@@ -23,18 +23,21 @@ export class CombatComponent {
   ) {}
 
   buildEncounter(): void {
-    this.encounter = new Encounter({
-      players: this.players.slice(0, 1),
-      enemies: [
-        this.enemies[0].copy(),
-        this.enemies[0].copy(),
-        this.enemies[0].copy(),
-        this.enemies[0].copy(),
-        this.enemies[0].copy(),
-        this.enemies[1].copy(),
-        this.enemies[2].copy()
-      ];
-    });
+    let groups = [];
+
+    let addGroup = (creature, quantity) => {
+      groups.push({
+        creature: creature,
+        quantity: quantity
+      });
+    };
+    this.players.forEach(player => addGroup(player, 1));
+    addGroup(this.enemies[0], 5);
+    addGroup(this.enemies[1], 3);
+    addGroup(this.enemies[2], 1);
+    addGroup(this.enemies[3], 1);
+    this.encounter = new Encounter(groups);
+    this.encounter.resetAll();
   }
 
   ngOnInit(): void {

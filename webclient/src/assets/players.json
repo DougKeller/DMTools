@@ -10,5 +10,17 @@
     "wisdom": 18,
     "intelligence": 12,
     "charisma": 12
+  },
+  {
+    "name": "Tashi Dawa",
+    "type": "humanoid",
+    "armorClass": 15,
+    "hitpoints": 56,
+    "strength": 10,
+    "dexterity": 18,
+    "constitution": 14,
+    "wisdom": 12,
+    "intelligence": 12,
+    "charisma": 12
   }
 ]

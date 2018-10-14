@@ -1,21 +1,27 @@
 import { Creature } from '@dm/common/models/creature';
 import { Player } from '@dm/common/models/player';
 import { Enemy } from '@dm/common/models/enemy';
+import { Group } from '@dm/common/interfaces/group';
 
 export class Encounter {
-  creatures: Array<Creature>;
+  groups: Group[];
 
-  constructor(params: { players: Player[], enemies: Enemy[] }) {
-    this.creatures = [].concat(params.players).concat(params.enemies);
-  }
-
-  players(): Player[] {
-    let players = [];
-    this.creatures.forEach(c => {
-      if (c instanceof Player) {
-        players.push(c)
+  constructor(groups: Group[]) {
+    this.groups = groups;
+    this.groups.forEach((group) => {
+      if (!group.hitpoints) {
+        group.hitpoints = new Array(group.quantity);
       }
     });
-    return players;
+  }
+
+  reset(group: Group): void {
+    for(var i = 0; i < group.quantity; i += 1) {
+      group.hitpoints[0] = group.creature.hitpoints;
+    }
+  }
+
+  resetAll(): void {
+    this.groups.forEach(this.reset);
   }
 }

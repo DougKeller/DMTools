@@ -1,6 +1,7 @@
 import { Ability } from '@dm/constants/ability';
 
-export class Creature {
+export abstract class Creature {
+  params;
   type: string;
   name: string;
 
@@ -51,7 +52,5 @@ export class Creature {
     return Math.floor(offset / 2);
   }
 
-  copy() {
-    return new this.constructor(this.params);
-  }
+  abstract copy();
 };
