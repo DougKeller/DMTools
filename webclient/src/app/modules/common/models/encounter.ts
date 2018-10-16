@@ -14,7 +14,7 @@ export class Encounter {
   }
 
   addGroup(creatureType: CreatureType, quantity: number): void {
-    this.groups.push(new Group(creatureType, quantity));
+    this.groups.push(new Group(creatureType, quantity, this.groups.length + 1));
   }
 
   get creatures(): Creature[] {

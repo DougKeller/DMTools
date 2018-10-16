@@ -19,6 +19,18 @@ export class EnemiesComponent {
 
   showList: { [creatureTypeName: string]: boolean } = {};
 
+  inputs: { [groupId: number]: { [creatureId: number]: string } } = {};
+
+  ngOnInit(): void {
+    this.encounter.groups.forEach((group) => {
+      this.inputs[group.id] = {};
+
+      group.creatures.forEach((creature) => {
+        this.inputs[group.id][creature.id] = '';
+      });
+    });
+  }
+
   groups(): Group[] {
     let groups: Group[] = [];
 
@@ -85,4 +97,19 @@ export class EnemiesComponent {
       return;
     }
   }
+
+  stuff(enemy: Creature, event: MouseEvent): void {
+    let progress = event.target;
+    if (progress.classList.contains('progress-bar')) {
+      progress = progress.parentElement;
+    }
+
+    let elementLeft = progress.getBoundingClientRect().left;
+    let elementWidth = progress.getBoundingClientRect().width;
+    let clickLeft = event.x;
+
+    let pct = (clickLeft - elementLeft) / elementWidth;
+    enemy.hitpoints = Math.round(pct * enemy.creatureType.hitpoints);
+  }
+
 }

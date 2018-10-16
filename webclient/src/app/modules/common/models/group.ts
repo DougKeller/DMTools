@@ -4,12 +4,15 @@ import { Creature } from '@dm/common/models/creature';
 export class Group {
   creatureType: CreatureType;
   quantity: number;
+  id: number;
 
   creatures: Creature[];
 
-  constructor(creatureType: CreatureType, quantity: number) {
+  constructor(creatureType: CreatureType, quantity: number, id: number) {
     this.creatureType = creatureType;
     this.quantity = quantity;
+    this.id = id;
+
     this.creatures = [];
     this.reset();
   }

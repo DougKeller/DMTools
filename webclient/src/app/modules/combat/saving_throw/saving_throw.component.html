@@ -1,4 +1,4 @@
-<!-- <div class="card shadow">
+<div class="card shadow">
   <h5 class="card-header">Saving Throw</h5>
 
   <div class="card-body">
@@ -8,40 +8,45 @@
           <div class="form-row mb-3">
             <div class="col">
               <label>Required Save</label>
-              <input [ngModelOptions]="{ standalone: true }" class="form-control" type="number" [(ngModel)]="options.savingThrow" (focus)="$event.target.select()" />
+              <input [ngModelOptions]="{ standalone: true }" class="form-control" type="number" [(ngModel)]="savingThrow" (focus)="$event.target.select()" />
             </div>
 
             <div class="col">
               <label>Ability</label>
-              <select [ngModelOptions]="{ standalone: true }" class="form-control" [(ngModel)]="options.ability">
-                <option *ngFor="let ability of abilities" [ngValue]="ability">
-                  {{ ability.abbreviation }}
-                </option>
+              <select [ngModelOptions]="{ standalone: true }" class="form-control" [(ngModel)]="ability">
+                <option [ngValue]="Ability.Strength">STR</option>
+                <option [ngValue]="Ability.Dexterity">DEX</option>
+                <option [ngValue]="Ability.Constitution">CON</option>
+                <option [ngValue]="Ability.Wisdom">WIS</option>
+                <option [ngValue]="Ability.Intelligence">INT</option>
+                <option [ngValue]="Ability.Charisma">CHA</option>
               </select>
             </div>
           </div>
 
-          <div class="form-row mb-4" *ngFor="let group of options.groups">
-            <div class="col">
-              <label>{{ group.enemyType.name }}</label>
+          <div class="form-row mb-1 align-items-center" *ngFor="let group of encounter.groups">
+            <div class="col text-truncate">
+              <label class="mb-0">{{ group.creatureType.name }}</label>
+            </div>
 
+            <div class="col-9">
               <div class="input-group">
-                <input [ngModelOptions]="{ standalone: true }" min="1" class="form-control" type="number" [(ngModel)]="group.count" (focus)="$event.target.select()" />
+                <input [ngModelOptions]="{ standalone: true }" min="0" max="{{ group.livingCreatures().length }}" class="form-control form-control-sm" type="number" [(ngModel)]="counts[group.id]" (focus)="$event.target.select()" />
 
                 <div class="input-group-append">
-                  <select [ngModelOptions]="{ standalone: true }" class="form-control" [(ngModel)]="group.rollType">
-                    <option [ngValue]="rollTypeEnum.Normal">Normal</option>
-                    <option [ngValue]="rollTypeEnum.Advantage">Advantage</option>
-                    <option [ngValue]="rollTypeEnum.Disadvantage">Disadvantage</option>
+                  <select [ngModelOptions]="{ standalone: true }" class="form-control form-control-sm" [(ngModel)]="rollTypes[group.id]">
+                    <option [ngValue]="RollType.Normal">Normal</option>
+                    <option [ngValue]="RollType.Advantage">Advantage</option>
+                    <option [ngValue]="RollType.Disadvantage">Disadvantage</option>
                   </select>
 
-                  <button type="button" class="btn btn-outline-secondary" (click)="group.count = 0; group.rollType = rollTypeEnum.Normal" [class.disabled]="group.count === 0">Clear</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary" (click)="counts[group.id] = 0; group.rollType = RollType.Normal" [class.disabled]="counts[group.id] === 0">Clear</button>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="form-row">
+          <div class="form-row mt-3">
             <div class="col">
               <button type="submit" class="btn btn-blue-dark btn-lg btn-block">Roll</button>
             </div>
@@ -60,7 +65,7 @@
       <table class="table">
         <thead class="thead">
           <tr>
-            <th scope="col">CreatureType</th>
+            <th scope="col">Creature</th>
             <th scope="col">Modifier</th>
             <th scope="col">Succeeded</th>
             <th scope="col">Failed</th>
@@ -69,7 +74,7 @@
 
         <tbody>
           <tr *ngFor="let result of summary.results">
-            <th scope="row" (click)="result.expanded = true">{{ result.enemyType.name }}</th>
+            <th scope="row" (click)="result.expanded = true">{{ result.creatureType.name }}</th>
             <td>{{ result.modifier > -1 ? '+' + result.modifier : result.modifier }}</td>
             <td>{{ result.succeeded }}</td>
             <td>{{ result.failed }}</td>
@@ -88,4 +93,4 @@
     </div>
   </div>
 </div>
- -->
+

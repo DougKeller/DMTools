@@ -31,14 +31,14 @@
                     <span>#{{ enemy.id }}</span>
                   </div>
                   <div class="col">
-                    <div class="progress">
+                    <div class="progress" (click)="stuff(enemy, $event)">
                       <div class="progress-bar bg-success" [ngStyle]="{ width: healthbarStyle(enemy) }">
                         {{ enemy.hitpoints }}/{{ enemy.creatureType.hitpoints }}
                       </div>
                     </div>
                   </div>
                   <div class="col-2">
-                    <input class="form-control form-control-sm" [(ngModel)]="value" [ngModelOptions]="{ standalone: true }" (keyup.enter)="adjustHealth(enemy, value); value = undefined" />
+                    <input class="form-control form-control-sm" [(ngModel)]="inputs[group.id][enemy.id]" [ngModelOptions]="{ standalone: true }" (keyup.enter)="adjustHealth(enemy, inputs[group.id][enemy.id]); inputs[group.id][enemy.id] = undefined" />
                   </div>
                 </div>
               </div>
