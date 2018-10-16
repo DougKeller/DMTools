@@ -27,6 +27,7 @@ export class AttackComponent {
   armorClass!: number;
   rollType!: RollType;
 
+  rolling: boolean = false;
   results?: Results;
 
   reset(): void {
@@ -53,7 +54,43 @@ export class AttackComponent {
     }
   }
 
+  rollNext(remaining: number): void {
+    if (remaining <= 0) {
+      this.rolling = false;
+      return;
+    }
+
+    const roll = this.rollWithType(this.rollType);
+    const criticallyHit = roll === 20;
+    const criticallyMiss = roll === 1;
+    const hit = criticallyHit || !criticallyMiss && (roll + this.modifier) >= this.armorClass;
+
+    if (hit) {
+      this.results.hit.total += 1;
+      if (criticallyHit) {
+        this.results.hit.critical += 1;
+      } else {
+        this.results.hit.normal += 1;
+      }
+    } else {
+      this.results.miss.total += 1;
+      if (criticallyMiss) {
+        this.results.miss.critical += 1;
+      } else {
+        this.results.miss.normal += 1;
+      }
+    }
+
+    setTimeout(() => this.rollNext(remaining - 1));
+  }
+
   roll(): void {
+    if (this.rolling) {
+      return;
+    }
+
+    this.rolling = true;
+
     this.results = {
       hit: {
         normal: 0,
@@ -67,27 +104,6 @@ export class AttackComponent {
       }
     };
 
-    for (let i = 0; i < this.quantity; i += 1) {
-      const roll = this.rollWithType(this.rollType);
-      const criticallyHit = roll === 20;
-      const criticallyMiss = roll === 1;
-      const hit = criticallyHit || !criticallyMiss && (roll + this.modifier) >= this.armorClass;
-
-      if (hit) {
-        this.results.hit.total += 1;
-        if (criticallyHit) {
-          this.results.hit.critical += 1;
-        } else {
-          this.results.hit.normal += 1;
-        }
-      } else {
-        this.results.miss.total += 1;
-        if (criticallyMiss) {
-          this.results.miss.critical += 1;
-        } else {
-          this.results.miss.normal += 1;
-        }
-      }
-    }
+    setTimeout(() => this.rollNext(this.quantity), 250);
   }
 }

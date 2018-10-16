@@ -3,6 +3,7 @@ import { Encounter } from '@dm/common/models/encounter';
 import { CreatureType } from '@dm/common/models/creature_type';
 import { EnemyType } from '@dm/common/models/enemy_type';
 import { Creature } from '@dm/common/interfaces/creature';
+import { Group } from '@dm/common/models/group';
 
 interface Cell {
   creatureType: CreatureType,
@@ -22,42 +23,30 @@ export class EnemiesComponent {
   enemies(targetCreatureType: CreatureType): Creature[] {
     let creatures: Creature[] = [];
 
-    this.encounter.creatures.forEach((status) => {
-      if (status.creatureType.name === targetCreatureType.name && status.hitpoints > 0) {
-        creatures.push(status);
+    this.encounter.creatures.forEach((creature) => {
+      if (creature.creatureType.name === targetCreatureType.name && creature.hitpoints > 0) {
+        creatures.push(creature);
       }
     });
 
     return creatures;
   }
 
-  typesOfEnemies(): Cell[] {
-    let cells: Cell[] = [];
+  enemyGroups(): Group[] {
+    let groups: Group[] = [];
 
-    this.encounter.creatures.forEach((status) => {
-      let creatureIsEnemyType = status.creatureType instanceof EnemyType;
-      if (status.hitpoints === 0 || !creatureIsEnemyType) {
-        return;
-      }
-
-      let done = false;
-      cells.forEach((cell) => {
-        if (cell.creatureType === status.creatureType) {
-          done = true;
-          cell.quantity += 1;
-        }
-      });
-      if (!done) {
-        cells.push({ creatureType: status.creatureType, quantity: 1 });
+    this.encounter.groups.forEach((group) => {
+      if (group.creatureType instanceof EnemyType) {
+        groups.push(group);
       }
     });
 
-    return cells;
+    return groups;
   }
 
-  percentHealth(status: Creature): string {
-    let current = status.hitpoints;
-    let total = status.creatureType.hitpoints;
+  percentHealth(creature: Creature): string {
+    let current = creature.hitpoints;
+    let total = creature.creatureType.hitpoints;
     return `${Math.floor(current * 100.0 / total)}%`;
   }
 

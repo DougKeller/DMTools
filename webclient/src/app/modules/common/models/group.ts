@@ -15,6 +15,7 @@ export class Group {
   }
 
   reset(): void {
+    this.creatures = [];
     for (var i = 0; i < this.quantity; i += 1) {
       let id = i + 1;
       this.creatures.push({
@@ -23,5 +24,15 @@ export class Group {
         id: id
       });
     }
+  }
+
+  livingCreatures(): Creature[] {
+    let creatures: Creature[] = [];
+    this.creatures.forEach((creature) => {
+      if (creature.hitpoints > 0) {
+        creatures.push(creature);
+      }
+    });
+    return creatures;
   }
 }

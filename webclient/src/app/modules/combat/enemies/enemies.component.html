@@ -7,41 +7,41 @@
     </div>
   </div>
 
-  <div class="card-body">
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item" *ngFor="let cell of typesOfEnemies()">
-        <div class="container-flush list-header" (click)="toggleShow(cell.creatureType)">
-          <div class="row d-flex align-items-center justify-content-between">
-            <div class="col">
-              <i class="fas fa-square text-red"></i>
-              {{ cell.creatureType.name }}
-            </div>
+  <div class="accordion">
+    <div class="card mb-0" *ngFor="let group of enemyGroups()">
+      <div class="card-header" (click)="toggleShow(group.creatureType)">
+        {{ group.creatureType.name }}
+        <span class="text-muted" *ngIf="group.livingCreatures().length > 1">(x{{ group.livingCreatures().length }})</span>
+        <span class="float-right">
+          <i class="fas" [ngClass]="{ 'fa-chevron-down': !show(group.creatureType), 'fa-chevron-up': show(group.creatureType) }"></i>
+        </span>
+      </div>
 
-            <span class="badge badge-primary badge-pill">{{ cell.quantity }}</span>
-          </div>
-        </div>
-        <div class="pt-3" *ngIf="show(cell.creatureType)">
+      <div class="collapse" [class.show]="show(group.creatureType)">
+        <div class="card-body">
           <ul class="list-group list-group-flush">
-            <li class="list-group-item p-1" *ngFor="let status of enemies(cell.creatureType)">
+            <li class="list-group-item p-1" *ngFor="let enemy of group.livingCreatures()">
               <div class="container-flush">
                 <div class="row">
                   <div class="col-2">
-                    <!-- <i class="fas fa-square text-red"></i> -->
-                    <span>#{{ status.id }}</span>
+                    <span>#{{ enemy.id }}</span>
                   </div>
                   <div class="col">
                     <div class="progress">
-                      <div class="progress-bar bg-success" [ngStyle]="{ width: percentHealth(status) }">
-                        {{ status.hitpoints }}/{{ status.creatureType.hitpoints }}
+                      <div class="progress-bar bg-success" [ngStyle]="{ width: percentHealth(enemy) }">
+                        {{ enemy.hitpoints }}/{{ enemy.creatureType.hitpoints }}
                       </div>
                     </div>
+                  </div>
+                  <div class="col-2">
+                    <input class="form-control">
                   </div>
                 </div>
               </div>
             </li>
           </ul>
         </div>
-      </li>
-    </ul>
+      </div>
+    </div>
   </div>
 </div>

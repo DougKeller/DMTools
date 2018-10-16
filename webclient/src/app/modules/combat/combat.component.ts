@@ -26,8 +26,8 @@ export class CombatComponent {
 
   buildEncounter(): void {
     this.encounter = new Encounter();
-    this.encounter.addGroup(this.enemyTypes[304], 20);
-    this.encounter.addGroup(this.enemyTypes[307], 5);
+    this.encounter.addGroup(this.enemyTypes[304], 5);
+    this.encounter.addGroup(this.enemyTypes[307], 3);
     this.encounter.addGroup(this.playerTypes[0], 1);
     this.encounter.addGroup(this.playerTypes[1], 1);
     this.encounter.reset();

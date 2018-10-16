@@ -67,28 +67,12 @@ export class InitiativeComponent {
 
   randomizeRolls(): void {
     this.rolls.forEach((roll) => {
-      let mods = [-2, -2, -1, -1, 0, 0, 0, 1, 1, 2, 2];
-      if (roll.modifier >= 0) {
-        let m = roll.modifier;
-        let i = 0;
-        while (m > 0) {
-          mods[i] += Math.floor(m / 2);
-          m -= 1;
-          i += 1;
-        }
-      } else {
-        let m = roll.modifier;
-        let i = 10;
-        while (m < 0) {
-          mods[i] += Math.floor(m / 2);
-          m += 1;
-          i -= 1;
-        }
-      }
-      let index = Math.floor(Math.random() * 11);
-      roll.base += mods[index];
+      roll.base += Dice.d(4).roll();
+      roll.base -= Dice.d(4).roll();
+
       roll.base = Math.min(roll.base, 20);
       roll.base = Math.max(roll.base, 1);
+
       roll.sum = roll.base + roll.modifier;
     });
   }
