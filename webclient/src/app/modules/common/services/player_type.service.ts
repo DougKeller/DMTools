@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { PlayerType } from '@dm/common/models/player_type';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { CreatureParameters } from '@dm/common/interfaces/creature_parameters';
+import { CreatureType } from '@dm/common/models/creature_type';
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +15,11 @@ export class PlayerTypeService {
     private http: HttpClient
   ) { }
 
-  private mapResponse(results: CreatureParameters[]): PlayerType[] {
-    return results.map((r) => new PlayerType(r));
+  private mapResponse(results: CreatureParameters[]): CreatureType[] {
+    return results.map((r) => new CreatureType(r, false));
   }
 
-  getPlayerTypes(): Observable<PlayerType[]> {
+  getPlayerTypes(): Observable<CreatureType[]> {
     return this.http.get<CreatureParameters>(this.playersUrl).pipe(map(this.mapResponse));
   }
 }

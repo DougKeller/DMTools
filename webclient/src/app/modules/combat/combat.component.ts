@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { EnemyType } from '@dm/common/models/enemy_type';
-import { PlayerType } from '@dm/common/models/player_type';
 import { CreatureType } from '@dm/common/models/creature_type';
 import { Group } from '@dm/common/models/group';
 import { forkJoin } from 'rxjs';
@@ -15,8 +13,8 @@ import { Encounter } from '@dm/common/models/encounter';
   templateUrl: './combat.component.html'
 })
 export class CombatComponent {
-  playerTypes: PlayerType[] = [];
-  enemyTypes: EnemyType[] = [];
+  playerTypes: CreatureType[] = [];
+  enemyTypes: CreatureType[] = [];
   encounter?: Encounter;
 
   constructor(

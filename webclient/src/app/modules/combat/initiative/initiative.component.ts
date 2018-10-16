@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Encounter } from '@dm/common/models/encounter';
 import { CreatureType } from '@dm/common/models/creature_type';
-import { PlayerType } from '@dm/common/models/player_type';
 import { Dice } from '@dm/common/models/dice';
 import { Ability } from '@dm/constants/ability';
 import { Group } from '@dm/common/models/group';
@@ -87,8 +86,8 @@ export class InitiativeComponent {
     }
   }
 
-  isPlayerType(creatureType: CreatureType): boolean {
-    return creatureType instanceof PlayerType;
+  isCreatureType(creatureType: CreatureType): boolean {
+    return creatureType instanceof CreatureType;
   }
 
   displayFor(roll: Roll): string {

@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Encounter } from '@dm/common/models/encounter';
 import { CreatureType } from '@dm/common/models/creature_type';
-import { EnemyType } from '@dm/common/models/enemy_type';
 import { Creature } from '@dm/common/models/creature';
 import { Group } from '@dm/common/models/group';
 
@@ -18,7 +17,19 @@ interface Cell {
 export class EnemiesComponent {
   @Input() encounter!: Encounter;
 
-  showList: { [creatureName: string]: boolean } = {};
+  showList: { [creatureTypeName: string]: boolean } = {};
+
+  groups(): Group[] {
+    let groups: Group[] = [];
+
+    this.encounter.groups.forEach((group) => {
+      if (group.creatureType.isEnemy() && group.livingCreatures().length > 0) {
+        groups.push(group);
+      }
+    });
+
+    return groups;
+  }
 
   enemies(targetCreatureType: CreatureType): Creature[] {
     let creatures: Creature[] = [];
@@ -32,18 +43,6 @@ export class EnemiesComponent {
     return creatures;
   }
 
-  enemyGroups(): Group[] {
-    let groups: Group[] = [];
-
-    this.encounter.groups.forEach((group) => {
-      if (group.creatureType instanceof EnemyType && group.livingCreatures().length > 0) {
-        groups.push(group);
-      }
-    });
-
-    return groups;
-  }
-
   healthbarStyle(creature: Creature): string {
     return `${creature.percentHealth()}%`;
   }
@@ -54,5 +53,36 @@ export class EnemiesComponent {
 
   show(creatureType: CreatureType): boolean {
     return this.showList[creatureType.name];
+  }
+
+  adjustHealth(enemy: Creature, amount?: string): void {
+    if (!amount) {
+      return;
+    }
+
+    let match = amount.match(/\+(\d+)/);
+    if (match) {
+      let amount: number = parseInt(match[1]);
+      enemy.hitpoints += amount;
+      enemy.hitpoints = Math.min(enemy.hitpoints, enemy.creatureType.hitpoints);
+      return;
+    }
+
+    match = amount.match(/-(\d+)/);
+    if (match) {
+      let amount: number = parseInt(match[1]);
+      enemy.hitpoints -= amount;
+      enemy.hitpoints = Math.max(enemy.hitpoints, 0);
+      return;
+    }
+
+    match = amount.match(/\d+/);
+    if (match) {
+      let amount: number = parseInt(match[0]);
+      enemy.hitpoints = amount;
+      enemy.hitpoints = Math.max(enemy.hitpoints, 0);
+      enemy.hitpoints = Math.min(enemy.hitpoints, enemy.creatureType.hitpoints);
+      return;
+    }
   }
 }

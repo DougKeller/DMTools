@@ -27,10 +27,10 @@
 
     <ul class="list-group list-group-flush mt-3" *ngIf="rolls">
       <li class="list-group-item" *ngFor="let roll of rolls; index as i" [class.active]="i === currentRollIndex">
-        <i class="fas fa-circle" [ngClass]="{ 'fa-circle text-blue': isPlayerType(roll.group.creatureType), 'fa-square text-red': !isPlayerType(roll.group.creatureType) }"></i>
+        <i class="fas fa-circle" [ngClass]="{ 'fa-circle': !roll.group.creatureType.isEnemy(), 'fa-square': roll.group.creatureType.isEnemy(), 'text-blue': !roll.group.creatureType.isEnemy() && i !== currentRollIndex,  'text-red': roll.group.creatureType.isEnemy() && i !== currentRollIndex }"></i>
         {{ roll.group.creatureType.name }}
-        <span class="text-muted" *ngIf="roll.group.quantity > 1">
-          (x{{ roll.group.quantity }})
+        <span [class.text-muted]="i !== currentRollIndex" *ngIf="roll.group.livingCreatures().length > 1">
+          (x{{ roll.group.livingCreatures().length }})
         </span>
 
         <div class="float-right">

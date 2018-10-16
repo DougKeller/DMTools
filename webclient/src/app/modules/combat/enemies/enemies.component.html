@@ -8,10 +8,14 @@
   </div>
 
   <div class="accordion">
-    <div class="card mb-0" *ngFor="let group of enemyGroups()">
+    <div class="card mb-0" *ngFor="let group of groups()">
       <div class="card-header" (click)="toggleShow(group.creatureType)">
         {{ group.creatureType.name }}
-        <span class="text-muted">(x{{ group.livingCreatures().length }})</span>
+
+        <span class="text-muted">
+          (x{{ group.livingCreatures().length }})
+        </span>
+
         <span class="float-right">
           <i class="fas" [ngClass]="{ 'fa-chevron-down': !show(group.creatureType), 'fa-chevron-up': show(group.creatureType) }"></i>
         </span>
@@ -22,7 +26,7 @@
           <ul class="list-group list-group-flush">
             <li class="list-group-item p-1" *ngFor="let enemy of group.livingCreatures()">
               <div class="container-flush">
-                <div class="row">
+                <div class="row align-items-center">
                   <div class="col-2">
                     <span>#{{ enemy.id }}</span>
                   </div>
@@ -34,7 +38,7 @@
                     </div>
                   </div>
                   <div class="col-2">
-                    <input class="form-control">
+                    <input class="form-control form-control-sm" [(ngModel)]="value" [ngModelOptions]="{ standalone: true }" (keyup.enter)="adjustHealth(enemy, value); value = undefined" />
                   </div>
                 </div>
               </div>

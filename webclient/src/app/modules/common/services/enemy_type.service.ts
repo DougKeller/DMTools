@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { EnemyType } from '@dm/common/models/enemy_type';
+import { CreatureType } from '@dm/common/models/creature_type';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -15,11 +15,11 @@ export class EnemyTypeService {
     private http: HttpClient
   ) { }
 
-  private mapResponse(results: CreatureParameters[]): EnemyType[] {
-    return results.map((r) => new EnemyType(r));
+  private mapResponse(results: CreatureParameters[]): CreatureType[] {
+    return results.map((r) => new CreatureType(r, true));
   }
 
-  getEnemyTypes(): Observable<EnemyType[]> {
+  getEnemyTypes(): Observable<CreatureType[]> {
     return this.http.get<CreatureParameters>(this.enemiesUrl).pipe(map(this.mapResponse));
   }
 }

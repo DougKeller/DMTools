@@ -1,10 +1,12 @@
 import { Ability } from '@dm/constants/ability';
 import { CreatureParameters } from '@dm/common/interfaces/creature_parameters';
 
-export abstract class CreatureType {
+export class CreatureType {
   params: CreatureParameters;
   type: string;
   name: string;
+
+  enemy: boolean;
 
   armorClass: number;
   hitpoints: number;
@@ -16,7 +18,7 @@ export abstract class CreatureType {
   intelligence: number;
   charisma: number;
 
-  constructor(params: CreatureParameters) {
+  constructor(params: CreatureParameters, enemy: boolean) {
     this.params = params;
     this.type = params.type;
     this.name = params.name;
@@ -28,6 +30,8 @@ export abstract class CreatureType {
     this.intelligence = params.intelligence;
     this.wisdom = params.wisdom;
     this.charisma = params.charisma;
+
+    this.enemy = enemy;
   }
 
   abilityKey(ability: Ability): string {
@@ -67,5 +71,9 @@ export abstract class CreatureType {
   modifier(ability: Ability): number {
     const offset = this.skill(ability) - 10;
     return Math.floor(offset / 2);
+  }
+
+  isEnemy(): boolean {
+    return this.enemy;
   }
 }
