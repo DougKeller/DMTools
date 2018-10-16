@@ -2,7 +2,7 @@ import { CreatureType } from '@dm/common/models/creature_type';
 import { PlayerType } from '@dm/common/models/player_type';
 import { EnemyType } from '@dm/common/models/enemy_type';
 import { Group } from '@dm/common/models/group';
-import { Creature } from '@dm/common/interfaces/creature';
+import { Creature } from '@dm/common/models/creature';
 
 export class Encounter {
   groups: Group[];

@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Encounter } from '@dm/common/models/encounter';
 import { CreatureType } from '@dm/common/models/creature_type';
 import { EnemyType } from '@dm/common/models/enemy_type';
-import { Creature } from '@dm/common/interfaces/creature';
+import { Creature } from '@dm/common/models/creature';
 import { Group } from '@dm/common/models/group';
 
 interface Cell {
@@ -36,7 +36,7 @@ export class EnemiesComponent {
     let groups: Group[] = [];
 
     this.encounter.groups.forEach((group) => {
-      if (group.creatureType instanceof EnemyType) {
+      if (group.creatureType instanceof EnemyType && group.livingCreatures().length > 0) {
         groups.push(group);
       }
     });
@@ -44,10 +44,8 @@ export class EnemiesComponent {
     return groups;
   }
 
-  percentHealth(creature: Creature): string {
-    let current = creature.hitpoints;
-    let total = creature.creatureType.hitpoints;
-    return `${Math.floor(current * 100.0 / total)}%`;
+  healthbarStyle(creature: Creature): string {
+    return `${creature.percentHealth()}%`;
   }
 
   toggleShow(creatureType: CreatureType): void {

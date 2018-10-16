@@ -54,7 +54,7 @@ export class AttackComponent {
     }
   }
 
-  rollNext(remaining: number): void {
+  rollNext(remaining: number, results: Results): void {
     if (remaining <= 0) {
       this.rolling = false;
       return;
@@ -66,22 +66,22 @@ export class AttackComponent {
     const hit = criticallyHit || !criticallyMiss && (roll + this.modifier) >= this.armorClass;
 
     if (hit) {
-      this.results.hit.total += 1;
+      results.hit.total += 1;
       if (criticallyHit) {
-        this.results.hit.critical += 1;
+        results.hit.critical += 1;
       } else {
-        this.results.hit.normal += 1;
+        results.hit.normal += 1;
       }
     } else {
-      this.results.miss.total += 1;
+      results.miss.total += 1;
       if (criticallyMiss) {
-        this.results.miss.critical += 1;
+        results.miss.critical += 1;
       } else {
-        this.results.miss.normal += 1;
+        results.miss.normal += 1;
       }
     }
 
-    setTimeout(() => this.rollNext(remaining - 1));
+    setTimeout(() => this.rollNext(remaining - 1, results));
   }
 
   roll(): void {
@@ -104,6 +104,7 @@ export class AttackComponent {
       }
     };
 
-    setTimeout(() => this.rollNext(this.quantity), 250);
+    let results: Results = this.results;
+    setTimeout(() => this.rollNext(this.quantity, results), 250);
   }
 }

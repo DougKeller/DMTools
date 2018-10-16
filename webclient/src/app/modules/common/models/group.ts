@@ -1,5 +1,5 @@
 import { CreatureType } from '@dm/common/models/creature_type';
-import { Creature } from '@dm/common/interfaces/creature';
+import { Creature } from '@dm/common/models/creature';
 
 export class Group {
   creatureType: CreatureType;
@@ -18,11 +18,8 @@ export class Group {
     this.creatures = [];
     for (var i = 0; i < this.quantity; i += 1) {
       let id = i + 1;
-      this.creatures.push({
-        creatureType: this.creatureType,
-        hitpoints: this.creatureType.hitpoints,
-        id: id
-      });
+      let creature = new Creature(this.creatureType, this.creatureType.hitpoints, id)
+      this.creatures.push(creature);
     }
   }
 
