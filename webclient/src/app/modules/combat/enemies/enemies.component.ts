@@ -98,9 +98,16 @@ export class EnemiesComponent {
     }
   }
 
-  stuff(enemy: Creature, event: MouseEvent): void {
-    let progress = event.target;
+  clickHealth(enemy: Creature, event: MouseEvent): void {
+    if (!event.target) {
+      return;
+    }
+
+    let progress: HTMLElement = <HTMLElement> event.target;
     if (progress.classList.contains('progress-bar')) {
+      if (!progress.parentElement) {
+        return;
+      }
       progress = progress.parentElement;
     }
 

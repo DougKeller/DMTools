@@ -6,16 +6,8 @@
   .card {
     background-color: transparent;
   }
+}
 
-  .collapse {
-    transition: height 0.2s;
-  }
-
-  .collapse:not(.show) {
-    max-height: 0px;
-  }
-
-  .collapse.show {
-    max-height: 5000px;
-  }
+.progress {
+  cursor: pointer;
 }

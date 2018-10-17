@@ -31,7 +31,7 @@
                     <span>#{{ enemy.id }}</span>
                   </div>
                   <div class="col">
-                    <div class="progress" (click)="stuff(enemy, $event)">
+                    <div class="progress" (click)="clickHealth(enemy, $event)">
                       <div class="progress-bar bg-success" [ngStyle]="{ width: healthbarStyle(enemy) }">
                         {{ enemy.hitpoints }}/{{ enemy.creatureType.hitpoints }}
                       </div>

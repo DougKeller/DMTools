@@ -8,19 +8,61 @@
           <div class="form-row mb-3">
             <div class="col">
               <label>Modifier</label>
-              <input [disabled]="rolling" [class.disabled]="rolling" [ngModelOptions]="{ standalone: true }"  type="number" class="form-control" [(ngModel)]="modifier" (focus)="$event.target.select()" />
+
+              <div class="input-group">
+                <input [disabled]="rolling" [class.disabled]="rolling" [ngModelOptions]="{ standalone: true }"  type="number" class="form-control" [(ngModel)]="modifier" (focus)="$event.target.select()" />
+
+                <div class="input-group-append">
+                  <button type="button" [disabled]="rolling" [class.disabled]="rolling" class="btn btn-sm btn-outline-danger" (click)="modifier = modifier - 1">
+                    <i class="fas fa-minus"></i>
+                  </button>
+
+                  <button type="button" [disabled]="rolling" [class.disabled]="rolling" class="btn btn-sm btn-outline-success" (click)="modifier = modifier + 1">
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </div>
+              </div>
+              <!-- <input [disabled]="rolling" [class.disabled]="rolling" [ngModelOptions]="{ standalone: true }"  type="number" class="form-control" [(ngModel)]="modifier" (focus)="$event.target.select()" /> -->
             </div>
 
             <div class="col">
               <label>Total Attacks</label>
-              <input [disabled]="rolling" [class.disabled]="rolling" [ngModelOptions]="{ standalone: true }"  type="number" class="form-control" [(ngModel)]="quantity" (focus)="$event.target.select()" />
+
+              <div class="input-group">
+                <input [disabled]="rolling" [class.disabled]="rolling" [ngModelOptions]="{ standalone: true }"  type="number" class="form-control" [(ngModel)]="quantity" (focus)="$event.target.select()" />
+
+                <div class="input-group-append">
+                  <button type="button" [disabled]="rolling" [class.disabled]="rolling" class="btn btn-sm btn-outline-danger" (click)="quantity = quantity - 1">
+                    <i class="fas fa-minus"></i>
+                  </button>
+
+                  <button type="button" [disabled]="rolling" [class.disabled]="rolling" class="btn btn-sm btn-outline-success" (click)="quantity = quantity + 1">
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
 
           <div class="form-row mb-3">
             <div class="col">
               <label>Defender AC</label>
-              <input [disabled]="rolling" [class.disabled]="rolling" [ngModelOptions]="{ standalone: true }" class="form-control" type="number" [(ngModel)]="armorClass" (focus)="$event.target.select()" />
+
+              <div class="input-group">
+                <input [disabled]="rolling" [class.disabled]="rolling" [ngModelOptions]="{ standalone: true }"  type="number" class="form-control" [(ngModel)]="armorClass" (focus)="$event.target.select()" />
+
+                <div class="input-group-append">
+                  <button type="button" [disabled]="rolling" [class.disabled]="rolling" class="btn btn-sm btn-outline-danger" (click)="armorClass = armorClass - 1">
+                    <i class="fas fa-minus"></i>
+                  </button>
+
+                  <button type="button" [disabled]="rolling" [class.disabled]="rolling" class="btn btn-sm btn-outline-success" (click)="armorClass = armorClass + 1">
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- <input [disabled]="rolling" [class.disabled]="rolling" [ngModelOptions]="{ standalone: true }" class="form-control" type="number" [(ngModel)]="armorClass" (focus)="$event.target.select()" /> -->
             </div>
 
             <div class="col">
