@@ -11,8 +11,6 @@ import { RootComponent } from '@dm/root/root.component';
 import { HeaderComponent } from '@dm/root/header.component';
 import { FooterComponent } from '@dm/root/footer.component';
 
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
 @NgModule({
   declarations: [
     RootComponent,
@@ -25,8 +23,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     CombatModule,
     ConstantsModule,
     HttpClientModule,
-    RoutingModule,
-    NgbModule.forRoot()
+    RoutingModule
   ],
   providers: [],
   bootstrap: [RootComponent]
