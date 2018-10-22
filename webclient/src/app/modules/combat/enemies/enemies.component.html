@@ -25,19 +25,33 @@
         <div class="card-body">
           <ul class="list-group list-group-flush">
             <li class="list-group-item p-1" *ngFor="let enemy of group.livingCreatures()">
-              <div class="container-flush">
+              <div class="container-flush d-none d-sm-block">
                 <div class="row align-items-center">
                   <div class="col-2">
                     <span>#{{ enemy.id }}</span>
                   </div>
                   <div class="col">
                     <div class="progress" (click)="clickHealth(enemy, $event)">
-                      <div class="progress-bar bg-success" [ngStyle]="{ width: healthbarStyle(enemy) }">
+                      <div class="progress-bar" [ngClass]="{ 'bg-success': enemy.hitpoints > (enemy.creatureType.hitpoints / 2), 'bg-danger': enemy.hitpoints <= (enemy.creatureType.hitpoints / 2) }" [ngStyle]="{ width: healthbarStyle(enemy) }">
                         {{ enemy.hitpoints }}/{{ enemy.creatureType.hitpoints }}
                       </div>
                     </div>
                   </div>
                   <div class="col-2">
+                    <input class="form-control form-control-sm" [(ngModel)]="inputs[group.id][enemy.id]" [ngModelOptions]="{ standalone: true }" (keyup.enter)="adjustHealth(enemy, inputs[group.id][enemy.id]); inputs[group.id][enemy.id] = undefined" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="container-flush d-sm-none">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <span>#{{ enemy.id }}</span>
+                  </div>
+                  <div class="col" [ngClass]="{ 'text-success': enemy.hitpoints > (enemy.creatureType.hitpoints / 2), 'text-danger': enemy.hitpoints <= (enemy.creatureType.hitpoints / 2) }" >
+                    {{ enemy.hitpoints }}/{{ enemy.creatureType.hitpoints }}
+                  </div>
+                  <div class="col">
                     <input class="form-control form-control-sm" [(ngModel)]="inputs[group.id][enemy.id]" [ngModelOptions]="{ standalone: true }" (keyup.enter)="adjustHealth(enemy, inputs[group.id][enemy.id]); inputs[group.id][enemy.id] = undefined" />
                   </div>
                 </div>

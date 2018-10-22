@@ -27,14 +27,44 @@
 
     <ul class="list-group list-group-flush mt-3" *ngIf="rolls">
       <li class="list-group-item" *ngFor="let roll of rolls; index as i" [class.active]="i === currentRollIndex">
-        <i class="fas fa-circle" [ngClass]="{ 'fa-circle': !roll.group.creatureType.isEnemy(), 'fa-square': roll.group.creatureType.isEnemy(), 'text-blue': !roll.group.creatureType.isEnemy() && i !== currentRollIndex,  'text-red': roll.group.creatureType.isEnemy() && i !== currentRollIndex }"></i>
-        {{ roll.group.creatureType.name }}
-        <span [class.text-muted]="i !== currentRollIndex" *ngIf="roll.group.livingCreatures().length > 1">
-          (x{{ roll.group.livingCreatures().length }})
-        </span>
+        <div class="container-fluid p-0 d-none d-sm-block">
+          <div class="row no-gutters">
+            <div class="col-sm">
+              <i class="fas fa-circle" [ngClass]="{ 'fa-circle': !roll.group.creatureType.isEnemy(), 'fa-square': roll.group.creatureType.isEnemy(), 'text-blue': !roll.group.creatureType.isEnemy() && i !== currentRollIndex,  'text-red': roll.group.creatureType.isEnemy() && i !== currentRollIndex }"></i>
+              {{ roll.group.creatureType.name }}
 
-        <div class="float-right">
-          {{ displayFor(roll) }}
+              <span [class.text-muted]="i !== currentRollIndex" *ngIf="roll.group.livingCreatures().length > 1">
+                (x{{ roll.group.livingCreatures().length }})
+              </span>
+            </div>
+
+            <div class="col-sm">
+              <div class="float-right">
+                {{ displayFor(roll) }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="container-fluid p-0 d-sm-none">
+          <div class="row no-gutters">
+            <div class="col">
+              <i class="fas fa-circle" [ngClass]="{ 'fa-circle': !roll.group.creatureType.isEnemy(), 'fa-square': roll.group.creatureType.isEnemy(), 'text-blue': !roll.group.creatureType.isEnemy() && i !== currentRollIndex,  'text-red': roll.group.creatureType.isEnemy() && i !== currentRollIndex }"></i>
+              {{ roll.group.creatureType.name }}
+            </div>
+          </div>
+
+          <div class="row no-gutters">
+            <div class="col">
+              <span [class.text-muted]="i !== currentRollIndex" *ngIf="roll.group.livingCreatures().length > 1">
+                (x{{ roll.group.livingCreatures().length }})
+              </span>
+
+              <div class="float-right">
+                {{ displayFor(roll) }}
+              </div>
+            </div>
+          </div>
         </div>
       </li>
     </ul>

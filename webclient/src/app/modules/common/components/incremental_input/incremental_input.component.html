@@ -1,0 +1,13 @@
+<div class="input-group">
+  <input type="number" class="form-control" [(ngModel)]="number" [ngModelOptions]="{ standalone: true }" [disabled]="disabled" [class.disabled]="disabled" min="{{ min }}" max="{{ max }}" (focus)="$event.target.select()" />
+
+  <div class="input-group-append">
+    <button type="button" [disabled]="disabled" [class.disabled]="disabled" class="btn btn-sm btn-outline-danger" (click)="number = number - 1">
+      <i class="fas fa-minus"></i>
+    </button>
+
+    <button type="button" [disabled]="disabled" [class.disabled]="disabled" class="btn btn-sm btn-outline-success" (click)="number = number + 1">
+      <i class="fas fa-plus"></i>
+    </button>
+  </div>
+</div>
