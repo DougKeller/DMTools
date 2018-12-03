@@ -19,10 +19,18 @@ body {
   margin-bottom: $card-columns-margin;
 }
 
-.modal-open {
+.modal {
   display: block;
-  padding-right: 15px;
+
+  .modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+
+  .card {
+    background-color: rgba(255, 255, 255, 1);
+  }
 }
+
 /*
 @media (min-width: 576px) {
   .card {
