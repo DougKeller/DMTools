@@ -19,7 +19,7 @@ export class PlayerTypeService {
     return results.map((r) => new CreatureType(r, false));
   }
 
-  getPlayerTypes(): Observable<CreatureType[]> {
+  getPlayerTypes$(): Observable<CreatureType[]> {
     return this.http.get<CreatureParameters>(this.playersUrl).pipe(map(this.mapResponse));
   }
 }

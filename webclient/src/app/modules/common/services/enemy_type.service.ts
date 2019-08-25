@@ -19,7 +19,7 @@ export class EnemyTypeService {
     return results.map((r) => new CreatureType(r, true));
   }
 
-  getEnemyTypes(): Observable<CreatureType[]> {
+  getEnemyTypes$(): Observable<CreatureType[]> {
     return this.http.get<CreatureParameters>(this.enemiesUrl).pipe(map(this.mapResponse));
   }
 }

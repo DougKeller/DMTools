@@ -33,8 +33,8 @@ export class CombatComponent {
 
   ngOnInit(): void {
     const observables = [
-      this.playerTypeService.getPlayerTypes(),
-      this.enemyTypeService.getEnemyTypes()
+      this.playerTypeService.getPlayerTypes$(),
+      this.enemyTypeService.getEnemyTypes$()
     ];
 
     forkJoin(observables).subscribe((content) => {
